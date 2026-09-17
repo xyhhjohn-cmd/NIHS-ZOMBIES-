@@ -1,0 +1,1273 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+button {
+    border: 0;
+    outline: none;
+    cursor: pointer;
+    color: white;
+    background: #222;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+button:active {
+    transform: scale(.95);
+}
+
+.screen {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #111;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================
+   INTRO
+========================= */
+
+#introScreen {
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#introImage {
+    position: absolute;
+    inset: 0;
+
+    background-size: cover;
+    background-position: center;
+
+    opacity: 0;
+
+    transform: scale(1.04);
+
+    transition:
+        opacity 1s ease,
+        transform 2.5s ease;
+}
+
+#introImage.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+#introEffects {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 20%,
+            rgba(0,0,0,.7)
+        );
+
+    animation: breathing 3s infinite alternate;
+}
+
+@keyframes breathing {
+
+    from {
+        opacity: .55;
+    }
+
+    to {
+        opacity: .85;
+    }
+}
+
+.smallButton {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+
+    z-index: 20;
+
+    background: rgba(0,0,0,.7);
+    border: 1px solid rgba(255,255,255,.4);
+}
+
+
+/* =========================
+   MENU
+========================= */
+
+.menuBackground {
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,.55),
+            rgba(0,0,0,.8)
+        ),
+        url("assets/intro/intro3.png");
+
+    background-size: cover;
+    background-position: center;
+
+    animation: menuZoom 8s infinite alternate;
+}
+
+@keyframes menuZoom {
+
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.08);
+    }
+}
+
+.menuContent {
+    position: relative;
+    z-index: 2;
+
+    width: 90%;
+    max-width: 420px;
+
+    margin: auto;
+
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 13px;
+
+    text-align: center;
+}
+
+.menuContent h1 {
+    font-size: 65px;
+    letter-spacing: 8px;
+}
+
+.menuContent h2 {
+    margin-bottom: 25px;
+    font-size: 20px;
+}
+
+.menuContent button {
+    width: 100%;
+    max-width: 300px;
+
+    background: rgba(0,0,0,.75);
+    border: 1px solid rgba(255,255,255,.3);
+}
+
+
+/* =========================
+   TOP BAR
+========================= */
+
+.topBar {
+    min-height: 65px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 10px;
+
+    background: rgba(0,0,0,.8);
+
+    position: relative;
+    z-index: 5;
+}
+
+.topBar h2 {
+    font-size: 18px;
+}
+
+
+/* =========================
+   CHARACTER SELECT
+========================= */
+
+#characterScreen {
+    overflow-y: auto;
+    background:
+        linear-gradient(
+            rgba(0,0,0,.88),
+            rgba(0,0,0,.95)
+        ),
+        url("assets/rooms/room1.jpg");
+
+    background-size: cover;
+}
+
+.gradeSelector {
+    display: flex;
+
+    gap: 8px;
+
+    overflow-x: auto;
+
+    padding: 12px;
+}
+
+.gradeSelector button {
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+
+#characterList {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(120px, 1fr)
+        );
+
+    gap: 10px;
+
+    padding: 12px;
+
+    padding-bottom: 260px;
+}
+
+.characterCard {
+
+    min-height: 150px;
+
+    border-radius: 12px;
+
+    padding: 10px;
+
+    background:
+        linear-gradient(
+            rgba(255,255,255,.08),
+            rgba(255,255,255,.02)
+        );
+
+    border: 1px solid rgba(255,255,255,.15);
+
+    text-align: center;
+
+    transition: .2s;
+}
+
+.characterCard.selected {
+    border: 2px solid white;
+    transform: translateY(-3px);
+}
+
+.characterVisual {
+
+    width: 80px;
+    height: 90px;
+
+    margin: auto;
+    margin-bottom: 8px;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 48px;
+
+    background:
+        linear-gradient(
+            #333,
+            #111
+        );
+}
+
+.characterVisual.girl {
+    border-radius: 35px 35px 12px 12px;
+}
+
+.characterVisual.john {
+    background:
+        linear-gradient(
+            #075cff,
+            #071b6b
+        );
+}
+
+.characterVisual.xyhh {
+    background:
+        linear-gradient(
+            #a020f0,
+            #3c075c
+        );
+}
+
+.characterCard h3 {
+    font-size: 13px;
+}
+
+
+#characterPreview {
+
+    position: fixed;
+
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 10;
+
+    padding: 15px;
+
+    text-align: center;
+
+    background:
+        rgba(0,0,0,.94);
+
+    border-top:
+        1px solid rgba(255,255,255,.2);
+}
+
+#previewCharacter {
+
+    width: 85px;
+    height: 85px;
+
+    margin: auto;
+
+    border-radius: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 45px;
+
+    background: #222;
+
+    animation: idleCharacter 1.8s infinite ease-in-out;
+}
+
+@keyframes idleCharacter {
+
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+#previewName {
+    margin-top: 5px;
+}
+
+#previewInfo {
+    color: #bbb;
+    font-size: 13px;
+    margin: 5px 0 10px;
+}
+
+
+/* =========================
+   SIDE
+========================= */
+
+#sideScreen {
+    display: flex;
+    flex-direction: column;
+
+    background:
+        radial-gradient(
+            circle,
+            #292929,
+            #050505
+        );
+}
+
+.sideCards {
+
+    flex: 1;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 20px;
+
+    flex-wrap: wrap;
+}
+
+.sideCard {
+
+    width: 150px;
+    min-height: 200px;
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    background:
+        rgba(255,255,255,.07);
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    transition: .2s;
+}
+
+.sideCard:active {
+    transform: scale(.94);
+}
+
+.sideIcon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.sideCard p {
+    margin-top: 10px;
+    color: #bbb;
+    font-size: 12px;
+}
+
+
+/* =========================
+   GAME
+========================= */
+
+#gameScreen {
+    background: #151515;
+}
+
+#gameCanvas {
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    touch-action: none;
+}
+
+
+/* =========================
+   HUD
+========================= */
+
+#gameHUD {
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+}
+
+.hudTop {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    padding: 10px;
+}
+
+.hudTop button {
+    pointer-events: auto;
+}
+
+.healthBar {
+
+    width: 150px;
+    height: 14px;
+
+    margin-top: 4px;
+
+    background: #333;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+#healthFill {
+
+    width: 100%;
+    height: 100%;
+
+    background: #25d34a;
+
+    transition: width .2s;
+}
+
+#healthText {
+    font-size: 11px;
+}
+
+.levelInfo {
+    text-align: center;
+
+    font-weight: bold;
+
+    font-size: 14px;
+}
+
+#weaponHUD {
+
+    position: absolute;
+
+    bottom: 25px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background: rgba(0,0,0,.7);
+
+    padding: 8px 15px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   JOYSTICK
+========================= */
+
+.joystick {
+
+    position: absolute;
+
+    bottom: 25px;
+
+    width: 125px;
+    height: 125px;
+
+    touch-action: none;
+
+    z-index: 20;
+}
+
+#leftJoystick {
+    left: 20px;
+}
+
+#rightJoystick {
+    right: 20px;
+}
+
+.joystickBase {
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.10);
+
+    border:
+        2px solid rgba(255,255,255,.2);
+
+    position: relative;
+}
+
+.joystickKnob {
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 50px;
+    height: 50px;
+
+    transform:
+        translate(-50%,-50%);
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.3);
+
+    border:
+        2px solid rgba(255,255,255,.5);
+}
+
+#attackButton {
+
+    position: absolute;
+
+    right: 165px;
+    bottom: 45px;
+
+    z-index: 21;
+
+    border-radius: 50%;
+
+    width: 80px;
+    height: 80px;
+
+    padding: 0;
+
+    background:
+        rgba(150,0,0,.75);
+}
+
+
+/* =========================
+   OVERLAY
+========================= */
+
+.overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    background:
+        rgba(0,0,0,.8);
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.pauseBox {
+
+    width: 85%;
+    max-width: 350px;
+
+    padding: 25px;
+
+    background: #151515;
+
+    border-radius: 20px;
+
+    text-align: center;
+}
+
+.pauseBox h1 {
+    margin-bottom: 25px;
+}
+
+.pauseBox button {
+
+    display: block;
+
+    width: 100%;
+
+    margin-top: 10px;
+}
+
+
+/* =========================
+   SETTINGS
+========================= */
+
+#settingsScreen {
+    overflow-y: auto;
+    background: #0d0d0d;
+}
+
+.settingsBox {
+
+    width: 90%;
+    max-width: 500px;
+
+    margin: 30px auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+.settingsBox label {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+    background: #181818;
+
+    padding: 15px;
+
+    border-radius: 12px;
+}
+
+.settingsBox input[type="range"] {
+    width: 100%;
+}
+
+
+/* =========================
+   SHOP
+========================= */
+
+#shopScreen {
+    overflow-y: auto;
+}
+
+.coins {
+
+    margin: 15px;
+
+    padding: 15px;
+
+    background: #181818;
+
+    border-radius: 12px;
+
+    text-align: center;
+}
+
+#shopItems {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(150px,1fr)
+        );
+
+    gap: 12px;
+
+    padding: 15px;
+}
+
+.shopItem {
+
+    padding: 15px;
+
+    background: #191919;
+
+    border-radius: 15px;
+
+    text-align: center;
+
+    border:
+        1px solid rgba(255,255,255,.1);
+}
+
+.shopItem h3 {
+    margin-bottom: 8px;
+}
+
+.shopItem p {
+    color: #aaa;
+    margin-bottom: 8px;
+}
+
+.shopItem button {
+    width: 100%;
+}
+
+
+/* =========================
+   VIDEO
+========================= */
+
+#cinematicVideo {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    background: black;
+}
+
+#cinematicSkip {
+    z-index: 101;
+}
+
+
+/* DESKTOP */
+
+@media (min-width: 800px) {
+
+    .joystick {
+        width: 150px;
+        height: 150px;
+    }
+
+    #characterList {
+        grid-template-columns:
+            repeat(
+                5,
+                1fr
+            );
+    }
+}
+
+/* =========================================================
+   NIHS ZOMBIE APOCALYPSE — CHARACTER VISUAL SYSTEM
+   ========================================================= */
+
+.character-card-image {
+    width: 100%;
+    height: 100px;
+    margin: 0 auto 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #242424, #0c0c0c);
+    border: 1px solid rgba(255,255,255,.12);
+    position: relative;
+}
+
+.character-image {
+    width: 90px;
+    height: 100px;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
+    transform-origin: center bottom;
+    animation: characterIdle 2s ease-in-out infinite;
+    filter: drop-shadow(0 8px 8px rgba(0,0,0,.45));
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.characterCard.selected .character-card-image {
+    border-color: rgba(255,255,255,.65);
+    box-shadow: 0 0 18px rgba(255,255,255,.16);
+}
+
+.characterCard.selected .character-image {
+    transform: scale(1.04);
+}
+
+@keyframes characterIdle {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-4px) scale(1.015); }
+}
+
+.character-name {
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 4px 2px;
+    overflow-wrap: anywhere;
+}
+
+.character-gender,
+.character-special {
+    color: #aaa;
+    font-size: 11px;
+    line-height: 1.2;
+    margin-top: 3px;
+}
+
+.character-special {
+    color: #ddd;
+    font-weight: 700;
+}
+
+.characterCard.john .character-card-image,
+.character-card.john .character-card-image {
+    background:
+        radial-gradient(circle at 50% 20%, rgba(70,150,255,.35), transparent 45%),
+        linear-gradient(180deg, #123d91, #061330);
+    box-shadow: inset 0 0 24px rgba(30,100,255,.18);
+}
+
+.characterCard.xyhh .character-card-image,
+.character-card.xyhh .character-card-image {
+    background:
+        radial-gradient(circle at 50% 20%, rgba(220,100,255,.35), transparent 45%),
+        linear-gradient(180deg, #6517a0, #21052f);
+    box-shadow: inset 0 0 24px rgba(180,50,255,.18);
+}
+
+.character-selected-check {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgba(0,0,0,.78);
+    border: 1px solid rgba(255,255,255,.4);
+    font-size: 13px;
+    font-weight: 900;
+    z-index: 3;
+}
+
+/* CHARACTER PREVIEW */
+
+#previewCharacter {
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 4px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: linear-gradient(180deg, #292929, #0b0b0b);
+    border: 1px solid rgba(255,255,255,.16);
+    animation: previewIdle 1.8s ease-in-out infinite;
+    box-shadow: 0 12px 28px rgba(0,0,0,.45);
+}
+
+#previewCharacter img,
+#previewCharacter .character-image {
+    width: 115px;
+    height: 125px;
+    object-fit: contain;
+}
+
+@keyframes previewIdle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+#previewCharacter.john,
+#previewCharacter[data-character="JOHN REYNARD"] {
+    background:
+        radial-gradient(circle at center, rgba(35,105,255,.28), transparent 60%),
+        linear-gradient(180deg, #123d91, #061330);
+}
+
+#previewCharacter.xyhh,
+#previewCharacter[data-character="XYHH"] {
+    background:
+        radial-gradient(circle at center, rgba(210,70,255,.28), transparent 60%),
+        linear-gradient(180deg, #6517a0, #21052f);
+}
+
+#previewName {
+    font-size: 18px;
+    font-weight: 900;
+}
+
+#previewInfo {
+    max-width: 520px;
+    margin: 5px auto 10px;
+}
+
+/* MOBILE / TOUCH */
+
+button {
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.screen {
+    overscroll-behavior: none;
+}
+
+.topBar button {
+    min-height: 42px;
+}
+
+.gradeSelector {
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+}
+
+.gradeSelector button {
+    min-height: 42px;
+    flex: 0 0 auto;
+}
+
+.characterCard {
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.characterCard:active {
+    transform: scale(.97);
+}
+
+#characterList {
+    align-items: stretch;
+}
+
+#characterList .characterCard {
+    min-width: 0;
+}
+
+/* SIDE SELECTION */
+
+.sideCards .sideCard {
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.sideCard:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255,255,255,.35);
+}
+
+#humanButton {
+    background:
+        radial-gradient(circle at 50% 20%, rgba(80,180,255,.18), transparent 55%),
+        rgba(255,255,255,.07);
+}
+
+#zombieButton {
+    background:
+        radial-gradient(circle at 50% 20%, rgba(255,50,50,.18), transparent 55%),
+        rgba(255,255,255,.07);
+}
+
+/* GAME HUD / SAFE AREAS */
+
+.hudTop {
+    padding-top: max(10px, env(safe-area-inset-top));
+    padding-left: max(10px, env(safe-area-inset-left));
+    padding-right: max(10px, env(safe-area-inset-right));
+}
+
+.joystick {
+    margin-bottom: env(safe-area-inset-bottom);
+}
+
+#attackButton {
+    margin-bottom: env(safe-area-inset-bottom);
+}
+
+#weaponHUD {
+    max-width: min(75vw, 420px);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* SETTINGS */
+
+.settingsBox button {
+    min-height: 44px;
+}
+
+.settingsBox input[type="range"] {
+    min-height: 28px;
+}
+
+/* SHOP — BOTH CLASS NAMINGS */
+
+#shopList,
+.shopItems {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+    padding: 15px;
+}
+
+.shop-item,
+.shopItem {
+    padding: 15px;
+    background: #191919;
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,.1);
+    transition: .2s;
+}
+
+.shop-item:hover,
+.shopItem:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255,255,255,.25);
+}
+
+.shop-item h3,
+.shopItem h3 {
+    margin-bottom: 8px;
+}
+
+.shop-item p,
+.shopItem p {
+    color: #aaa;
+    margin-bottom: 8px;
+}
+
+.shop-item button,
+.shopItem button {
+    width: 100%;
+    min-height: 42px;
+}
+
+/* CINEMATIC */
+
+#cinematicScreen {
+    background: #000;
+}
+
+#cinematicSkip,
+.cinematic-skip {
+    position: absolute;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    z-index: 110;
+    background: rgba(0,0,0,.72);
+    border: 1px solid rgba(255,255,255,.35);
+}
+
+/* COUNTDOWN */
+
+#countdown,
+.countdown {
+    font-size: clamp(55px, 16vw, 120px);
+    font-weight: 900;
+    text-align: center;
+    text-shadow: 0 8px 30px rgba(0,0,0,.8);
+    pointer-events: none;
+}
+
+/* ROOM TRANSITION */
+
+.roomTransition,
+#roomTransition {
+    position: fixed;
+    inset: 0;
+    z-index: 95;
+    pointer-events: none;
+    background: #000;
+    opacity: 0;
+    transition: opacity .35s ease;
+}
+
+.roomTransition.show,
+#roomTransition.show {
+    opacity: 1;
+}
+
+/* RESPONSIVE CHARACTER GRID */
+
+@media (max-width: 420px) {
+    #characterList {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        padding: 8px;
+        padding-bottom: 285px;
+    }
+
+    .characterCard {
+        min-height: 145px;
+        padding: 8px;
+    }
+
+    .character-card-image {
+        height: 92px;
+    }
+
+    .character-image {
+        width: 82px;
+        height: 94px;
+    }
+
+    #characterPreview {
+        padding: 10px;
+    }
+
+    #previewCharacter {
+        width: 105px;
+        height: 105px;
+    }
+
+    #previewCharacter img,
+    #previewCharacter .character-image {
+        width: 94px;
+        height: 100px;
+    }
+
+    .joystick {
+        width: 112px;
+        height: 112px;
+        bottom: 18px;
+    }
+
+    #leftJoystick {
+        left: 12px;
+    }
+
+    #rightJoystick {
+        right: 12px;
+    }
+
+    #attackButton {
+        width: 68px;
+        height: 68px;
+        right: 137px;
+        bottom: 38px;
+    }
+}
+
+@media (min-width: 421px) and (max-width: 799px) {
+    #characterList {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
