@@ -1,1 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 320">
+  <ellipse cx="120" cy="300" rx="65" ry="12" fill="#000" opacity=".25"/>
 
+  <!-- buhok -->
+  <path d="M78 72 Q120 35 162 72 L155 125 L85 125 Z" fill="#171717"/>
+  <path d="M84 78 Q120 48 156 78 L148 100 L92 100 Z" fill="#252525"/>
+
+  <!-- ulo -->
+  <ellipse cx="120" cy="112" rx="42" ry="48" fill="#f2c7a5"/>
+
+  <!-- mata -->
+  <ellipse cx="104" cy="111" rx="5" ry="7" fill="#111"/>
+  <ellipse cx="136" cy="111" rx="5" ry="7" fill="#111"/>
+
+  <!-- kilay -->
+  <path d="M95 98 Q104 93 113 98" stroke="#222" stroke-width="5" fill="none"/>
+  <path d="M127 98 Q136 93 145 98" stroke="#222" stroke-width="5" fill="none"/>
+
+  <!-- ilong -->
+  <path d="M120 112 L116 128 L124 128" stroke="#b98262" stroke-width="3" fill="none"/>
+
+  <!-- bibig -->
+  <path d="M108 140 Q120 148 132 140" stroke="#8b4545" stroke-width="4" fill="none"/>
+
+  <!-- leeg -->
+  <rect x="105" y="150" width="30" height="25" rx="8" fill="#f2c7a5"/>
+
+  <!-- asul na damit -->
+  <path d="M72 172 Q120 155 168 172 L190 270 Q120 292 50 270 Z" fill="#1769d1"/>
+  <path d="M90 170 Q120 195 150 170 L145 230 L120 245 L95 230 Z" fill="#2583ed"/>
+
+  <!-- logo -->
+  <circle cx="120" cy="205" r="17" fill="#fff"/>
+  <text x="120" y="211" text-anchor="middle" font-size="15" font-family="Arial" font-weight="bold" fill="#1769d1">J</text>
+
+  <!-- braso -->
+  <path d="M72 180 Q42 205 38 245" stroke="#f2c7a5" stroke-width="22" stroke-linecap="round"/>
+  <path d="M168 180 Q198 205 202 245" stroke="#f2c7a5" stroke-width="22" stroke-linecap="round"/>
+
+  <!-- pantalon -->
+  <path d="M78 267 L112 267 L108 300 L75 300 Z" fill="#20283b"/>
+  <path d="M128 267 L162 267 L165 300 L132 300 Z" fill="#20283b"/>
+
+  <!-- sapatos -->
+  <path d="M70 298 Q92 292 110 302 L110 313 L65 313 Q62 305 70 298Z" fill="#111"/>
+  <path d="M130 302 Q148 292 170 298 Q178 305 175 313 L130 313Z" fill="#111"/>
+</svg>
