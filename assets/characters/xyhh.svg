@@ -1,1 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 320">
+  <ellipse cx="120" cy="300" rx="65" ry="12" fill="#000" opacity=".25"/>
 
+  <!-- mahabang buhok -->
+  <path d="M68 105 Q70 48 120 42 Q170 48 172 105 L165 205 Q145 220 120 205 Q95 220 75 205 Z"
+        fill="#32145f"/>
+  <path d="M78 72 Q120 35 162 72 L170 145 L70 145 Z" fill="#4b2187"/>
+
+  <!-- mukha -->
+  <ellipse cx="120" cy="112" rx="41" ry="47" fill="#f0c4a4"/>
+
+  <!-- buhok sa harap -->
+  <path d="M80 92 Q120 55 160 92 L150 120 Q140 90 120 100 Q100 90 90 120Z"
+        fill="#32145f"/>
+
+  <!-- mata -->
+  <ellipse cx="104" cy="113" rx="5" ry="7" fill="#111"/>
+  <ellipse cx="136" cy="113" rx="5" ry="7" fill="#111"/>
+
+  <!-- pilikmata -->
+  <path d="M96 106 L90 101" stroke="#111" stroke-width="3"/>
+  <path d="M144 106 L150 101" stroke="#111" stroke-width="3"/>
+
+  <!-- ilong -->
+  <path d="M120 115 L116 130 L124 130" stroke="#b98262" stroke-width="3" fill="none"/>
+
+  <!-- bibig -->
+  <path d="M108 141 Q120 147 132 141" stroke="#8b4545" stroke-width="4" fill="none"/>
+
+  <!-- leeg -->
+  <rect x="105" y="150" width="30" height="25" rx="8" fill="#f0c4a4"/>
+
+  <!-- purple na damit -->
+  <path d="M72 172 Q120 155 168 172 L190 270 Q120 292 50 270 Z" fill="#7627c9"/>
+  <path d="M90 171 Q120 195 150 171 L145 230 L120 245 L95 230 Z" fill="#913ce5"/>
+
+  <!-- logo -->
+  <circle cx="120" cy="205" r="17" fill="#fff"/>
+  <text x="120" y="211" text-anchor="middle" font-size="15" font-family="Arial" font-weight="bold" fill="#7627c9">X</text>
+
+  <!-- braso -->
+  <path d="M72 180 Q42 205 38 245" stroke="#f0c4a4" stroke-width="22" stroke-linecap="round"/>
+  <path d="M168 180 Q198 205 202 245" stroke="#f0c4a4" stroke-width="22" stroke-linecap="round"/>
+
+  <!-- palda/pantalon -->
+  <path d="M78 267 L112 267 L108 300 L75 300 Z" fill="#24243a"/>
+  <path d="M128 267 L162 267 L165 300 L132 300 Z" fill="#24243a"/>
+
+  <!-- sapatos -->
+  <path d="M70 298 Q92 292 110 302 L110 313 L65 313 Q62 305 70 298Z" fill="#111"/>
+  <path d="M130 302 Q148 292 170 298 Q178 305 175 313 L130 313Z" fill="#111"/>
+</svg>
