@@ -1,2467 +1,4535 @@
-/* =====================================================
+/* =========================================================
    NIHS ZOMBIE APOCALYPSE
-   MAIN GAME SCRIPT
-===================================================== */
+   UPDATED SCRIPT.JS
+   Character Image System + Existing Game Systems
+   ========================================================= */
 
 
-/* =====================================================
+/* =========================================================
    GAME DATA
-===================================================== */
+   ========================================================= */
 
 const characters = {
+  7: {
+    boys: ["Steve", "Cyber", "C"],
+    girls: ["A", "J", "T"]
+  },
 
-    7: {
-        boys: [
-            "Steve",
-            "Cyber",
-            "C"
-        ],
+  8: {
+    boys: ["BOSS H", "BOSS NY", "E", "D"],
+    girls: ["XYHH", "ASH", "JORLONG", "MITCH", "HYRIS"]
+  },
 
-        girls: [
-            "A",
-            "J",
-            "T"
-        ]
-    },
+  9: {
+    boys: ["R", "D", "EJ"],
+    girls: ["Y", "H", "V"]
+  },
 
-    8: {
-        boys: [
-            "BOSS H",
-            "BOSS NY",
-            "E",
-            "D"
-        ],
+  10: {
+    boys: [
+      "JOHN REYNARD",
+      "ARCHEL",
+      "CARL",
+      "RHEY",
+      "RHAMCES",
+      "CRISTIAN",
+      "JES",
+      "SHR",
+      "JUL",
+      "ARCH",
+      "KENT",
+      "RENCEY",
+      "ELM",
+      "REX",
+      "JC"
+    ],
 
-        girls: [
-            "XYHH",
-            "ASH",
-            "JORLONG",
-            "MITCH",
-            "HYRIS"
-        ]
-    },
+    girls: ["A", "S", "J", "M", "I", "D"]
+  },
 
-    9: {
-        boys: [
-            "R",
-            "D",
-            "EJ"
-        ],
+  11: {
+    boys: ["A", "C", "R"],
+    girls: ["D", "M", "J"]
+  },
 
-        girls: [
-            "Y",
-            "H",
-            "V"
-        ]
-    },
-
-    10: {
-        boys: [
-            "JOHN REYNARD",
-            "ARCHEL",
-            "CARL",
-            "RHEY",
-            "RHAMCES",
-            "CRISTIAN",
-            "JES",
-            "SHR",
-            "JUL",
-            "ARCH",
-            "KENT",
-            "RENCEY",
-            "ELM",
-            "REX",
-            "JC"
-        ],
-
-        girls: [
-            "A",
-            "S",
-            "J",
-            "M",
-            "I",
-            "D"
-        ]
-    },
-
-    11: {
-        boys: [
-            "A",
-            "C",
-            "R"
-        ],
-
-        girls: [
-            "D",
-            "M",
-            "J"
-        ]
-    },
-
-    12: {
-        boys: [
-            "S",
-            "AR",
-            "T"
-        ],
-
-        girls: []
-    }
+  12: {
+    boys: ["S", "AR", "T"],
+    girls: []
+  }
 };
 
 
-/* =====================================================
+/* =========================================================
    WEAPONS
-===================================================== */
+   ========================================================= */
 
 const weapons = [
+  {
+    name: "CHALK",
+    damage: 5,
+    price: 0
+  },
 
-    {
-        name: "CHALK",
-        damage: 5,
-        price: 0
-    },
+  {
+    name: "BOOK",
+    damage: 5,
+    price: 0
+  },
 
-    {
-        name: "BOOK",
-        damage: 5,
-        price: 0
-    },
+  {
+    name: "STONE",
+    damage: 10,
+    price: 100
+  },
 
-    {
-        name: "STONE",
-        damage: 10,
-        price: 100
-    },
+  {
+    name: "BALLPEN",
+    damage: 10,
+    price: 150
+  },
 
-    {
-        name: "BALLPEN",
-        damage: 10,
-        price: 150
-    },
+  {
+    name: "CHAIR",
+    damage: 15,
+    price: 300
+  },
 
-    {
-        name: "CHAIR",
-        damage: 15,
-        price: 300
-    },
+  {
+    name: "LAPTOP",
+    damage: 20,
+    price: 500
+  },
 
-    {
-        name: "LAPTOP",
-        damage: 20,
-        price: 500
-    },
+  {
+    name: "BROOM",
+    damage: 10,
+    price: 250
+  },
 
-    {
-        name: "BROOM",
-        damage: 10,
-        price: 250
-    },
+  {
+    name: "WATER BOTTLE",
+    damage: 10,
+    price: 200
+  },
 
-    {
-        name: "WATER BOTTLE",
-        damage: 10,
-        price: 200
-    },
+  {
+    name: "RULER",
+    damage: 5,
+    price: 100
+  },
 
-    {
-        name: "RULER",
-        damage: 5,
-        price: 100
-    },
+  {
+    name: "BAG",
+    damage: 15,
+    price: 350
+  },
 
-    {
-        name: "BAG",
-        damage: 15,
-        price: 350
-    },
+  {
+    name: "TRASH BIN",
+    damage: 20,
+    price: 600
+  },
 
-    {
-        name: "TRASH BIN",
-        damage: 20,
-        price: 600
-    },
-
-    {
-        name: "FIRE EXTINGUISHER",
-        damage: 20,
-        price: 1000
-    }
-
+  {
+    name: "FIRE EXTINGUISHER",
+    damage: 20,
+    price: 1000
+  }
 ];
 
 
-/* =====================================================
+/* =========================================================
    ROOMS
-===================================================== */
+   ========================================================= */
 
 const rooms = {
 
-    1: {
-        name: "ROOM 1",
-        type: "classroom",
-        enemyCount: 3,
-        enemyHealth: 50
-    },
+  1: {
+    name: "ROOM 1",
+    type: "classroom",
+    enemyCount: 3,
+    enemyHealth: 50
+  },
 
-    2: {
-        name: "ROOM 2",
-        type: "classroom2",
-        enemyCount: 5,
-        enemyHealth: 60
-    },
+  2: {
+    name: "ROOM 2",
+    type: "classroom2",
+    enemyCount: 5,
+    enemyHealth: 60
+  },
 
-    3: {
-        name: "ROOM 3",
-        type: "hallway",
-        enemyCount: 7,
-        enemyHealth: 70
-    },
+  3: {
+    name: "ROOM 3",
+    type: "hallway",
+    enemyCount: 7,
+    enemyHealth: 70
+  },
 
-    4: {
-        name: "ROOM 4",
-        type: "science",
-        enemyCount: 9,
-        enemyHealth: 80
-    },
+  4: {
+    name: "ROOM 4",
+    type: "science",
+    enemyCount: 9,
+    enemyHealth: 80
+  },
 
-    5: {
-        name: "ROOM 5",
-        type: "library",
-        enemyCount: 12,
-        enemyHealth: 90
-    },
+  5: {
+    name: "ROOM 5",
+    type: "library",
+    enemyCount: 12,
+    enemyHealth: 90
+  },
 
-    6: {
-        name: "ROOM 6",
-        type: "final",
-        enemyCount: 15,
-        enemyHealth: 100
-    }
-
+  6: {
+    name: "ROOM 6",
+    type: "final",
+    enemyCount: 15,
+    enemyHealth: 100
+  }
 };
 
 
-/* =====================================================
+/* =========================================================
    GAME STATE
-===================================================== */
+   ========================================================= */
 
 let state = {
 
-    grade: 7,
+  grade: 7,
 
-    character: null,
+  character: null,
 
-    side: null,
+  side: null,
 
-    health: 100,
+  health: 100,
 
-    maxHealth: 100,
+  maxHealth: 100,
 
-    room: 1,
+  room: 1,
 
-    level: 1,
+  level: 1,
 
-    weapon: weapons[0],
+  weapon: weapons[0],
 
-    coins: 0,
+  coins: 0,
 
-    purchasedWeapons: ["CHALK", "BOOK"],
+  purchasedWeapons: [
+    "CHALK",
+    "BOOK"
+  ],
 
-    settings: {
+  settings: {
 
-        master: 1,
+    master: 1,
 
-        music: .6,
+    music: 0.6,
 
-        sfx: .8,
+    sfx: 0.8,
 
-        vibration: true,
+    vibration: true,
 
-        fullscreen: false
+    fullscreen: false
 
-    }
+  }
 
 };
 
 
-/* =====================================================
+/* =========================================================
+   GLOBAL VARIABLES
+   ========================================================= */
+
+let gameRunning = false;
+
+let paused = false;
+
+let gameLoopId = null;
+
+let enemies = [];
+
+let objects = [];
+
+let yawaTimer = null;
+
+let countdownRunning = false;
+
+let currentJoystick = null;
+
+let joystickData = {
+
+  left: {
+    active: false,
+    x: 0,
+    y: 0
+  },
+
+  right: {
+    active: false,
+    x: 0,
+    y: 0
+  }
+
+};
+
+
+/* =========================================================
+   PLAYER
+   ========================================================= */
+
+const player = {
+
+  x: 400,
+
+  y: 300,
+
+  radius: 20,
+
+  speed: 3,
+
+  aimX: 1,
+
+  aimY: 0
+
+};
+
+
+/* =========================================================
+   DOM
+   ========================================================= */
+
+const canvas = document.getElementById("gameCanvas");
+
+const ctx = canvas
+  ? canvas.getContext("2d")
+  : null;
+
+const gameMusic =
+  document.getElementById("gameMusic");
+
+const yawaSound =
+  document.getElementById("yawaSound");
+
+const clickSound =
+  document.getElementById("clickSound");
+
+
+/* =========================================================
    SCREEN SYSTEM
-===================================================== */
+   ========================================================= */
 
 function showScreen(id) {
 
-    document
-        .querySelectorAll(".screen")
-        .forEach(screen => {
+  document
+    .querySelectorAll(".screen")
+    .forEach(screen => {
 
-            screen.classList.add("hidden");
+      screen.classList.remove("active");
 
-        });
+    });
 
-    document
-        .getElementById(id)
-        .classList.remove("hidden");
+  const target =
+    document.getElementById(id);
+
+  if (target) {
+
+    target.classList.add("active");
+
+  }
 
 }
 
 
-/* =====================================================
-   AUDIO
-===================================================== */
-
-const gameMusic =
-    document.getElementById("gameMusic");
-
-const yawaSound =
-    document.getElementById("yawaSound");
-
-const clickSound =
-    document.getElementById("clickSound");
-
+/* =========================================================
+   CLICK SOUND
+   ========================================================= */
 
 function playClick() {
 
-    if (!clickSound) return;
+  if (!clickSound) return;
 
-    clickSound.volume =
-        state.settings.master *
-        state.settings.sfx;
+  try {
 
     clickSound.currentTime = 0;
 
+    clickSound.volume =
+      state.settings.master *
+      state.settings.sfx;
+
     clickSound.play().catch(() => {});
+
+  } catch (error) {}
+
 }
 
 
+/* =========================================================
+   AUDIO
+   ========================================================= */
+
 function updateAudio() {
 
-    gameMusic.volume =
-        state.settings.master *
-        state.settings.music;
+  if (!gameMusic) return;
+
+  gameMusic.volume =
+    state.settings.master *
+    state.settings.music;
 
 }
 
 
 function startMusic() {
 
-    updateAudio();
+  if (!gameMusic) return;
 
-    gameMusic
-        .play()
-        .catch(() => {});
+  updateAudio();
+
+  gameMusic.loop = true;
+
+  gameMusic.play().catch(() => {});
+
 }
 
 
 function stopMusic() {
 
-    gameMusic.pause();
+  if (!gameMusic) return;
+
+  gameMusic.pause();
+
+  gameMusic.currentTime = 0;
 
 }
 
 
-/* =====================================================
-   INTRO
-===================================================== */
+/* =========================================================
+   CHARACTER IMAGE SYSTEM
+   ========================================================= */
 
-let introIndex = 0;
+function getCharacterImage(name) {
+
+  if (!name) {
+
+    return "assets/characters/character-default.svg";
+
+  }
+
+
+  const upperName =
+    String(name).toUpperCase();
+
+
+  /*
+     SPECIAL CHARACTER:
+     JOHN REYNARD
+  */
+
+  if (upperName === "JOHN REYNARD") {
+
+    return "assets/characters/john-reynard.svg";
+
+  }
+
+
+  /*
+     SPECIAL CHARACTER:
+     XYHH
+  */
+
+  if (upperName === "XYHH") {
+
+    return "assets/characters/xyhh.svg";
+
+  }
+
+
+  /*
+     ALL OTHER CHARACTERS
+  */
+
+  return "assets/characters/character-default.svg";
+
+}
+
+
+/* =========================================================
+   CHARACTER IMAGE ELEMENT
+   ========================================================= */
+
+function createCharacterImage(name, gender, className = "") {
+
+  const img =
+    document.createElement("img");
+
+  img.className =
+    `character-image ${className}`;
+
+  img.src =
+    getCharacterImage(name);
+
+  img.alt =
+    name || "Character";
+
+  img.draggable = false;
+
+  img.loading = "lazy";
+
+
+  /*
+     FALLBACK
+     Kung hindi makita ang SVG,
+     default character ang lalabas.
+  */
+
+  img.onerror = function () {
+
+    if (
+      img.src.includes(
+        "character-default.svg"
+      )
+    ) {
+
+      return;
+
+    }
+
+    img.src =
+      "assets/characters/character-default.svg";
+
+  };
+
+
+  /*
+     Basic inline styling para
+     gumana kahit wala pang CSS update.
+  */
+
+  img.style.width = "100%";
+
+  img.style.height = "100%";
+
+  img.style.objectFit = "contain";
+
+  img.style.pointerEvents = "none";
+
+  img.style.userSelect = "none";
+
+
+  return img;
+
+}
+
+
+/* =========================================================
+   INTRO
+   ========================================================= */
 
 const introImages = [
 
-    "assets/intro/intro1.png",
+  "assets/intro/intro1.png",
 
-    "assets/intro/intro2.png",
+  "assets/intro/intro2.png",
 
-    "assets/intro/intro3.png"
+  "assets/intro/intro3.png"
 
 ];
+
+let introIndex = 0;
+
+let introTimer = null;
 
 
 function startIntro() {
 
-    const image =
-        document.getElementById("introImage");
+  showScreen("introScreen");
 
-    introIndex = 0;
+  introIndex = 0;
 
-    showIntroImage();
+  showIntroImage();
 
 }
 
 
 function showIntroImage() {
 
-    const image =
-        document.getElementById("introImage");
+  const intro =
+    document.getElementById(
+      "introScreen"
+    );
 
-    image.classList.remove("show");
+  if (!intro) {
 
-    setTimeout(() => {
+    showMenu();
 
-        image.style.backgroundImage =
-            `url("${introImages[introIndex]}")`;
+    return;
 
-        image.classList.add("show");
-
-    }, 100);
+  }
 
 
-    setTimeout(() => {
+  intro.style.backgroundImage =
+    `url("${introImages[introIndex]}")`;
 
-        if (introIndex < introImages.length - 1) {
 
-            introIndex++;
+  intro.classList.remove(
+    "intro-image-active"
+  );
 
-            showIntroImage();
 
-        } else {
+  void intro.offsetWidth;
 
-            setTimeout(() => {
 
-                showMenu();
+  intro.classList.add(
+    "intro-image-active"
+  );
 
-            }, 2000);
 
-        }
+  /*
+     Third image gets animation.
+  */
 
-    }, 2000);
+  if (introIndex === 2) {
+
+    intro.classList.add(
+      "intro-third-image"
+    );
+
+  } else {
+
+    intro.classList.remove(
+      "intro-third-image"
+    );
+
+  }
+
+
+  clearTimeout(introTimer);
+
+
+  introTimer = setTimeout(() => {
+
+    introIndex++;
+
+    if (
+      introIndex >=
+      introImages.length
+    ) {
+
+      /*
+         Keep third image visible.
+         Do not immediately remove it.
+      */
+
+      return;
+
+    }
+
+
+    showIntroImage();
+
+  }, 2000);
 
 }
 
 
-document
-    .getElementById("introSkip")
-    .addEventListener(
-        "click",
-        () => {
+/* =========================================================
+   INTRO SKIP
+   ========================================================= */
 
-            playClick();
+const introSkip =
+  document.getElementById(
+    "introSkip"
+  );
 
-            showMenu();
 
-        }
-    );
+if (introSkip) {
 
+  introSkip.addEventListener(
+    "click",
+    () => {
+
+      playClick();
+
+      clearTimeout(introTimer);
+
+      showMenu();
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   MAIN MENU
+   ========================================================= */
 
 function showMenu() {
 
-    document
-        .getElementById("introScreen")
-        .classList.add("hidden");
+  clearTimeout(introTimer);
 
-    showScreen("menuScreen");
+  showScreen("menuScreen");
+
+  startMusic();
 
 }
 
 
-/* =====================================================
+/* =========================================================
    NEW GAME
-===================================================== */
+   ========================================================= */
 
 function newGame() {
 
-    playClick();
+  playClick();
 
-    state.character = null;
-    state.side = null;
 
-    state.health = 100;
+  state.character = null;
 
-    state.room = 1;
-    state.level = 1;
+  state.side = null;
 
-    selectGrade(7);
+  state.health = 100;
 
-    showScreen("characterScreen");
+  state.maxHealth = 100;
+
+  state.room = 1;
+
+  state.level = 1;
+
+  state.weapon = weapons[0];
+
+  state.purchasedWeapons = [
+    "CHALK",
+    "BOOK"
+  ];
+
+
+  selectGrade(7);
+
+  showScreen(
+    "characterScreen"
+  );
 
 }
 
 
-/* =====================================================
-   CONTINUE
-===================================================== */
+/* =========================================================
+   CONTINUE GAME
+   ========================================================= */
 
 function continueGame() {
 
-    playClick();
+  playClick();
 
-    const saved =
-        localStorage.getItem(
-            "NIHS_ZOMBIE_SAVE"
-        );
-
-    if (!saved) {
-
-        alert("Wala pay save nga duwa.");
-
-        return;
-
-    }
-
-    try {
-
-        state =
-            JSON.parse(saved);
-
-        updateCharacterList();
-
-        showScreen("sideScreen");
-
-    } catch {
-
-        alert("Dili mabasa ang imong save.");
-
-    }
-
-}
-
-
-/* =====================================================
-   CHARACTER SELECTION
-===================================================== */
-
-function selectGrade(grade) {
-
-    state.grade = grade;
-
-    updateCharacterList();
-
-}
-
-
-function updateCharacterList() {
-
-    const list =
-        document.getElementById(
-            "characterList"
-        );
-
-    list.innerHTML = "";
-
-    const grade =
-        characters[state.grade];
-
-    if (!grade) return;
-
-
-    function addCharacters(
-        names,
-        gender
-    ) {
-
-        names.forEach(name => {
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-            card.className =
-                "characterCard";
-
-
-            let specialClass = "";
-
-            if (
-                name ===
-                "JOHN REYNARD"
-            ) {
-
-                specialClass =
-                    "john";
-
-            }
-
-            if (
-                name ===
-                "XYHH"
-            ) {
-
-                specialClass =
-                    "xyhh";
-
-            }
-
-
-            const icon =
-                gender === "boy"
-                    ? "👦"
-                    : "👧";
-
-
-            card.innerHTML = `
-
-                <div class="
-                    characterVisual
-                    ${gender === "girl" ? "girl" : ""}
-                    ${specialClass}
-                ">
-                    ${icon}
-                </div>
-
-                <h3>${name}</h3>
-
-                <small>
-                    ${gender === "boy"
-                        ? "LALAKI"
-                        : "BABAYE"}
-                </small>
-            `;
-
-
-            card.onclick = () => {
-
-                selectCharacter(
-                    name,
-                    gender
-                );
-
-            };
-
-
-            list.appendChild(card);
-
-        });
-
-    }
-
-
-    addCharacters(
-        grade.boys,
-        "boy"
+  const saved =
+    localStorage.getItem(
+      "NIHS_ZOMBIE_SAVE"
     );
 
-    addCharacters(
-        grade.girls,
-        "girl"
+
+  if (!saved) {
+
+    alert(
+      "Wala pay na-save nga duwa."
     );
 
-}
+    return;
+
+  }
 
 
-function selectCharacter(
-    name,
-    gender
-) {
+  try {
 
-    playClick();
+    const loaded =
+      JSON.parse(saved);
 
-    state.character = {
 
-        name,
+    state = {
 
-        gender,
+      ...state,
 
-        grade: state.grade
+      ...loaded,
+
+      settings: {
+
+        ...state.settings,
+
+        ...(loaded.settings || {})
+
+      }
 
     };
 
 
-    document
-        .querySelectorAll(
-            ".characterCard"
-        )
-        .forEach(card => {
-
-            card.classList.remove(
-                "selected"
-            );
-
-        });
-
-
-    const preview =
-        document.getElementById(
-            "previewCharacter"
-        );
-
-    preview.innerText =
-        gender === "boy"
-            ? "👦"
-            : "👧";
-
-
-    preview.className = "";
-
-
-    if (name === "JOHN REYNARD") {
-
-        preview.classList.add("john");
-
-    }
-
-
-    if (name === "XYHH") {
-
-        preview.classList.add("xyhh");
-
-    }
-
-
-    document.getElementById(
-        "previewName"
-    ).innerText = name;
-
-
-    let info =
-        `Baitang ${state.grade} • ` +
-        (gender === "boy"
-            ? "Lalaki"
-            : "Babaye");
-
-
-    if (
-        name === "JOHN REYNARD"
-    ) {
-
-        info +=
-            " • Espesyal nga asul nga outfit.";
-
-    }
-
-
-    if (
-        name === "XYHH"
-    ) {
-
-        info +=
-            " • Espesyal nga purpura nga outfit.";
-
-    }
-
-
-    document.getElementById(
-        "previewInfo"
-    ).innerText = info;
-
-}
-
-
-function confirmCharacter() {
-
-    if (!state.character) {
-
-        alert(
-            "Pili usa og karakter."
-        );
-
-        return;
-
-    }
-
-    playClick();
+    updateCharacterList();
 
     showScreen("sideScreen");
 
+  } catch (error) {
+
+    alert(
+      "Dili mabasa ang save file."
+    );
+
+  }
+
 }
 
 
-/* =====================================================
-   SIDE
-===================================================== */
+/* =========================================================
+   CHARACTER GRADE SELECTION
+   ========================================================= */
+
+function selectGrade(grade) {
+
+  playClick();
+
+  state.grade = Number(grade);
+
+  updateCharacterList();
+
+
+  /*
+     Update grade buttons
+  */
+
+  document
+    .querySelectorAll(
+      ".grade-button"
+    )
+    .forEach(button => {
+
+      button.classList.remove(
+        "selected"
+      );
+
+      if (
+        Number(
+          button.dataset.grade
+        ) === state.grade
+      ) {
+
+        button.classList.add(
+          "selected"
+        );
+
+      }
+
+    });
+
+}
+
+
+/* =========================================================
+   CHARACTER LIST
+   ========================================================= */
+
+function updateCharacterList() {
+
+  const container =
+    document.getElementById(
+      "characterList"
+    );
+
+
+  if (!container) return;
+
+
+  container.innerHTML = "";
+
+
+  const gradeData =
+    characters[state.grade];
+
+
+  if (!gradeData) return;
+
+
+  /*
+     BOYS
+  */
+
+  gradeData.boys.forEach(name => {
+
+    createCharacterCard(
+      container,
+      name,
+      "Lalaki"
+    );
+
+  });
+
+
+  /*
+     GIRLS
+  */
+
+  gradeData.girls.forEach(name => {
+
+    createCharacterCard(
+      container,
+      name,
+      "Babaye"
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   CHARACTER CARD
+   ========================================================= */
+
+function createCharacterCard(
+  container,
+  name,
+  gender
+) {
+
+  const card =
+    document.createElement("div");
+
+
+  card.className =
+    "characterCard";
+
+
+  /*
+     Special classes
+  */
+
+  if (
+    name.toUpperCase() ===
+    "JOHN REYNARD"
+  ) {
+
+    card.classList.add("john");
+
+  }
+
+
+  if (
+    name.toUpperCase() ===
+    "XYHH"
+  ) {
+
+    card.classList.add("xyhh");
+
+  }
+
+
+  /*
+     IMAGE AREA
+  */
+
+  const imageBox =
+    document.createElement("div");
+
+  imageBox.className =
+    "character-card-image";
+
+
+  const image =
+    createCharacterImage(
+      name,
+      gender
+    );
+
+
+  imageBox.appendChild(image);
+
+  card.appendChild(imageBox);
+
+
+  /*
+     NAME
+  */
+
+  const nameElement =
+    document.createElement("div");
+
+  nameElement.className =
+    "character-name";
+
+  nameElement.textContent =
+    name;
+
+  card.appendChild(
+    nameElement
+  );
+
+
+  /*
+     GENDER
+  */
+
+  const genderElement =
+    document.createElement("div");
+
+  genderElement.className =
+    "character-gender";
+
+  genderElement.textContent =
+    gender;
+
+  card.appendChild(
+    genderElement
+  );
+
+
+  /*
+     Special description
+  */
+
+  if (
+    name.toUpperCase() ===
+    "JOHN REYNARD"
+  ) {
+
+    const special =
+      document.createElement("div");
+
+    special.className =
+      "character-special";
+
+    special.textContent =
+      "Asul nga espesyal nga outfit";
+
+    card.appendChild(
+      special
+    );
+
+  }
+
+
+  if (
+    name.toUpperCase() ===
+    "XYHH"
+  ) {
+
+    const special =
+      document.createElement("div");
+
+    special.className =
+      "character-special";
+
+    special.textContent =
+      "Purpura nga espesyal nga outfit";
+
+    card.appendChild(
+      special
+    );
+
+  }
+
+
+  /*
+     Selected state
+  */
+
+  if (
+    state.character &&
+    state.character.name === name &&
+    Number(
+      state.character.grade
+    ) === Number(state.grade)
+  ) {
+
+    card.classList.add(
+      "selected"
+    );
+
+  }
+
+
+  /*
+     Click
+  */
+
+  card.addEventListener(
+    "click",
+    () => {
+
+      playClick();
+
+      selectCharacter(
+        name,
+        gender
+      );
+
+    }
+  );
+
+
+  container.appendChild(card);
+
+}
+
+
+/* =========================================================
+   SELECT CHARACTER
+   ========================================================= */
+
+function selectCharacter(
+  name,
+  gender
+) {
+
+  state.character = {
+
+    name: name,
+
+    gender: gender,
+
+    grade: state.grade
+
+  };
+
+
+  /*
+     Remove previous selection
+  */
+
+  document
+    .querySelectorAll(
+      ".characterCard"
+    )
+    .forEach(card => {
+
+      card.classList.remove(
+        "selected"
+      );
+
+    });
+
+
+  /*
+     Find selected card by name
+  */
+
+  document
+    .querySelectorAll(
+      ".characterCard"
+    )
+    .forEach(card => {
+
+      const nameElement =
+        card.querySelector(
+          ".character-name"
+        );
+
+
+      if (
+        nameElement &&
+        nameElement.textContent ===
+        name
+      ) {
+
+        card.classList.add(
+          "selected"
+        );
+
+      }
+
+    });
+
+
+  /*
+     BIG PREVIEW
+  */
+
+  const preview =
+    document.getElementById(
+      "previewCharacter"
+    );
+
+
+  if (preview) {
+
+    preview.innerHTML = "";
+
+
+    const previewImage =
+      createCharacterImage(
+        name,
+        gender,
+        "preview-character-image"
+      );
+
+
+    preview.appendChild(
+      previewImage
+    );
+
+
+    preview.classList.remove(
+      "john",
+      "xyhh"
+    );
+
+
+    if (
+      name.toUpperCase() ===
+      "JOHN REYNARD"
+    ) {
+
+      preview.classList.add(
+        "john"
+      );
+
+    }
+
+
+    if (
+      name.toUpperCase() ===
+      "XYHH"
+    ) {
+
+      preview.classList.add(
+        "xyhh"
+      );
+
+    }
+
+  }
+
+
+  /*
+     Preview name
+  */
+
+  const previewName =
+    document.getElementById(
+      "previewName"
+    );
+
+
+  if (previewName) {
+
+    previewName.textContent =
+      name;
+
+  }
+
+
+  /*
+     Preview information
+  */
+
+  const previewInfo =
+    document.getElementById(
+      "previewInfo"
+    );
+
+
+  if (previewInfo) {
+
+    let info =
+      `Baitang ${state.grade} • ${gender}`;
+
+
+    if (
+      name.toUpperCase() ===
+      "JOHN REYNARD"
+    ) {
+
+      info +=
+        " • Asul nga espesyal nga outfit";
+
+    }
+
+
+    if (
+      name.toUpperCase() ===
+      "XYHH"
+    ) {
+
+      info +=
+        " • Purpura nga espesyal nga outfit";
+
+    }
+
+
+    previewInfo.textContent =
+      info;
+
+  }
+
+
+  /*
+     Save character selection
+  */
+
+  saveGame();
+
+}
+
+
+/* =========================================================
+   CONFIRM CHARACTER
+   ========================================================= */
+
+function confirmCharacter() {
+
+  playClick();
+
+
+  if (!state.character) {
+
+    alert(
+      "Pili usa og karakter."
+    );
+
+    return;
+
+  }
+
+
+  showScreen("sideScreen");
+
+}
+
+
+/* =========================================================
+   SIDE SELECTION
+   ========================================================= */
 
 function chooseSide(side) {
 
-    playClick();
+  playClick();
 
-    state.side = side;
+  state.side = side;
 
-    if (side === "human") {
 
-        state.maxHealth = 100;
+  if (side === "human") {
 
-        state.health = 100;
+    state.maxHealth = 100;
 
-    } else {
+    state.health = 100;
 
-        state.maxHealth = 200;
+  }
 
-        state.health = 200;
 
-    }
+  if (side === "zombie") {
 
-    saveGame();
+    state.maxHealth = 200;
 
-    startGame();
+    state.health = 200;
+
+  }
+
+
+  saveGame();
+
+  startGame();
 
 }
 
 
-/* =====================================================
-   GAME START
-===================================================== */
-
-let ctx;
-
-const canvas =
-    document.getElementById(
-        "gameCanvas"
-    );
+/* =========================================================
+   START GAME
+   ========================================================= */
 
 function startGame() {
 
-    showScreen("gameScreen");
+  showScreen("gameScreen");
 
-    startMusic();
+  startMusic();
 
-    setupCanvas();
+  setupCanvas();
 
-    updateHUD();
+  updateHUD();
 
-    createRoom();
+  createRoom();
 
-    startGameLoop();
+  gameRunning = true;
 
-    startYawaTimer();
+  paused = false;
+
+  startGameLoop();
+
+  startYawaTimer();
 
 }
 
+
+/* =========================================================
+   CANVAS
+   ========================================================= */
 
 function setupCanvas() {
 
+  if (!canvas) return;
+
+
+  function resizeCanvas() {
+
+    const rect =
+      canvas.getBoundingClientRect();
+
+
     canvas.width =
-        window.innerWidth;
+      Math.max(
+        400,
+        Math.floor(rect.width)
+      );
+
 
     canvas.height =
-        window.innerHeight;
-
-    ctx =
-        canvas.getContext("2d");
-
-}
-
-
-window.addEventListener(
-    "resize",
-    setupCanvas
-);
-
-
-/* =====================================================
-   ROOM SYSTEM
-===================================================== */
-
-let player = {
-
-    x: 0,
-
-    y: 0,
-
-    radius: 20,
-
-    speed: 3
-
-};
-
-
-let enemies = [];
-
-let roomObjects = [];
-
-
-function createRoom() {
-
-    const room =
-        rooms[state.room];
-
-    enemies = [];
-
-    roomObjects = [];
+      Math.max(
+        300,
+        Math.floor(rect.height)
+      );
 
 
     player.x =
-        canvas.width / 2;
+      Math.min(
+        player.x,
+        canvas.width - 40
+      );
+
 
     player.y =
-        canvas.height / 2;
+      Math.min(
+        player.y,
+        canvas.height - 40
+      );
+
+  }
 
 
-    /* Walls */
-
-    roomObjects.push({
-
-        type: "wall",
-
-        x: 0,
-
-        y: 0,
-
-        w: canvas.width,
-
-        h: 25
-
-    });
+  resizeCanvas();
 
 
-    roomObjects.push({
+  if (!canvas.dataset.resizeBound) {
 
-        type: "wall",
+    window.addEventListener(
+      "resize",
+      resizeCanvas
+    );
 
-        x: 0,
+    canvas.dataset.resizeBound =
+      "true";
 
-        y: canvas.height - 25,
-
-        w: canvas.width,
-
-        h: 25
-
-    });
-
-
-    roomObjects.push({
-
-        type: "wall",
-
-        x: 0,
-
-        y: 0,
-
-        w: 25,
-
-        h: canvas.height
-
-    });
-
-
-    roomObjects.push({
-
-        type: "wall",
-
-        x: canvas.width - 25,
-
-        y: 0,
-
-        w: 25,
-
-        h: canvas.height
-
-    });
-
-
-    /* Furniture / obstacles */
-
-    const count =
-        state.room + 2;
-
-
-    for (
-        let i = 0;
-        i < count;
-        i++
-    ) {
-
-        roomObjects.push({
-
-            type: "furniture",
-
-            x:
-                70 +
-                Math.random() *
-                (canvas.width - 180),
-
-            y:
-                100 +
-                Math.random() *
-                (canvas.height - 220),
-
-            w:
-                70 +
-                Math.random() * 50,
-
-            h:
-                35 +
-                Math.random() * 30
-
-        });
-
-    }
-
-
-    /* Enemies */
-
-    for (
-        let i = 0;
-        i < room.enemyCount;
-        i++
-    ) {
-
-        let enemy = {
-
-            x:
-                50 +
-                Math.random() *
-                (canvas.width - 100),
-
-            y:
-                80 +
-                Math.random() *
-                (canvas.height - 140),
-
-            radius: 18,
-
-            health:
-                room.enemyHealth,
-
-            maxHealth:
-                room.enemyHealth,
-
-            speed:
-                .5 +
-                state.room * .08,
-
-            infected: false
-
-        };
-
-        enemies.push(enemy);
-
-    }
-
-
-    updateHUD();
+  }
 
 }
 
 
-/* =====================================================
-   DRAW ROOM
-===================================================== */
+/* =========================================================
+   CREATE ROOM
+   ========================================================= */
 
-function drawRoom() {
+function createRoom() {
 
-    ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
+  if (!canvas) return;
 
 
-    /* FLOOR */
-
-    ctx.fillStyle =
-        state.room % 2 === 0
-            ? "#242424"
-            : "#303030";
-
-    ctx.fillRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
+  const room =
+    rooms[state.room];
 
 
-    /* FLOOR TILES */
+  enemies = [];
 
-    ctx.strokeStyle =
-        "rgba(255,255,255,.05)";
-
-    ctx.lineWidth = 1;
+  objects = [];
 
 
-    for (
-        let x = 25;
-        x < canvas.width;
-        x += 50
-    ) {
+  /*
+     Player spawn
+  */
 
-        ctx.beginPath();
+  player.x =
+    canvas.width / 2;
 
-        ctx.moveTo(x, 25);
-
-        ctx.lineTo(
-            x,
-            canvas.height - 25
-        );
-
-        ctx.stroke();
-
-    }
+  player.y =
+    canvas.height / 2;
 
 
-    for (
-        let y = 25;
-        y < canvas.height;
-        y += 50
-    ) {
+  /*
+     Furniture / objects
+  */
 
-        ctx.beginPath();
-
-        ctx.moveTo(25, y);
-
-        ctx.lineTo(
-            canvas.width - 25,
-            y
-        );
-
-        ctx.stroke();
-
-    }
+  const objectCount =
+    8 + state.room;
 
 
-    /* ROOM OBJECTS */
+  for (
+    let i = 0;
+    i < objectCount;
+    i++
+  ) {
 
-    roomObjects.forEach(obj => {
+    objects.push({
 
-        if (obj.type === "wall") {
+      x:
+        60 +
+        Math.random() *
+        Math.max(
+          100,
+          canvas.width - 120
+        ),
 
-            ctx.fillStyle =
-                "#101010";
+      y:
+        60 +
+        Math.random() *
+        Math.max(
+          100,
+          canvas.height - 120
+        ),
 
-            ctx.fillRect(
-                obj.x,
-                obj.y,
-                obj.w,
-                obj.h
-            );
+      width:
+        40 +
+        Math.random() * 60,
 
-        }
-
-
-        if (
-            obj.type ===
-            "furniture"
-        ) {
-
-            ctx.fillStyle =
-                "#654321";
-
-            ctx.fillRect(
-                obj.x,
-                obj.y,
-                obj.w,
-                obj.h
-            );
-
-            ctx.strokeStyle =
-                "#8b6a45";
-
-            ctx.strokeRect(
-                obj.x,
-                obj.y,
-                obj.w,
-                obj.h
-            );
-
-        }
+      height:
+        25 +
+        Math.random() * 45
 
     });
 
+  }
 
-    /* PLAYER */
+
+  /*
+     Enemies
+  */
+
+  for (
+    let i = 0;
+    i < room.enemyCount;
+    i++
+  ) {
+
+    let x =
+      50 +
+      Math.random() *
+      Math.max(
+        100,
+        canvas.width - 100
+      );
+
+    let y =
+      50 +
+      Math.random() *
+      Math.max(
+        100,
+        canvas.height - 100
+      );
+
+
+    /*
+       Ayaw i-spawn sa player.
+    */
+
+    if (
+      Math.abs(
+        x - player.x
+      ) < 100
+    ) {
+
+      x += 120;
+
+    }
+
+
+    if (
+      Math.abs(
+        y - player.y
+      ) < 100
+    ) {
+
+      y += 120;
+
+    }
+
+
+    enemies.push({
+
+      x: x,
+
+      y: y,
+
+      radius: 18,
+
+      health:
+        room.enemyHealth,
+
+      maxHealth:
+        room.enemyHealth,
+
+      speed:
+        0.5 +
+        state.room * 0.08,
+
+      infected: false,
+
+      dead: false
+
+    });
+
+  }
+
+}
+
+
+/* =========================================================
+   DRAW ROOM
+   ========================================================= */
+
+function drawRoom() {
+
+  if (!ctx || !canvas) return;
+
+
+  const width =
+    canvas.width;
+
+  const height =
+    canvas.height;
+
+
+  /*
+     FLOOR
+  */
+
+  ctx.fillStyle =
+    "#202020";
+
+  ctx.fillRect(
+    0,
+    0,
+    width,
+    height
+  );
+
+
+  /*
+     FLOOR TILES
+  */
+
+  ctx.strokeStyle =
+    "rgba(255,255,255,0.04)";
+
+  ctx.lineWidth = 1;
+
+
+  const tileSize = 40;
+
+
+  for (
+    let x = 0;
+    x < width;
+    x += tileSize
+  ) {
+
+    ctx.beginPath();
+
+    ctx.moveTo(x, 0);
+
+    ctx.lineTo(
+      x,
+      height
+    );
+
+    ctx.stroke();
+
+  }
+
+
+  for (
+    let y = 0;
+    y < height;
+    y += tileSize
+  ) {
+
+    ctx.beginPath();
+
+    ctx.moveTo(0, y);
+
+    ctx.lineTo(
+      width,
+      y
+    );
+
+    ctx.stroke();
+
+  }
+
+
+  /*
+     WALLS
+  */
+
+  ctx.fillStyle =
+    "#111";
+
+  ctx.fillRect(
+    0,
+    0,
+    width,
+    20
+  );
+
+  ctx.fillRect(
+    0,
+    height - 20,
+    width,
+    20
+  );
+
+  ctx.fillRect(
+    0,
+    0,
+    20,
+    height
+  );
+
+  ctx.fillRect(
+    width - 20,
+    0,
+    20,
+    height
+  );
+
+
+  /*
+     FURNITURE
+  */
+
+  objects.forEach(obj => {
+
+    ctx.fillStyle =
+      "#5b4636";
+
+    ctx.fillRect(
+      obj.x,
+      obj.y,
+      obj.width,
+      obj.height
+    );
+
+
+    ctx.strokeStyle =
+      "#2b211a";
+
+    ctx.strokeRect(
+      obj.x,
+      obj.y,
+      obj.width,
+      obj.height
+    );
+
+  });
+
+
+  /*
+     ENEMIES
+  */
+
+  enemies.forEach(enemy => {
+
+    if (enemy.dead) return;
+
 
     ctx.save();
 
-    ctx.shadowBlur = 15;
 
-    ctx.shadowColor =
-        state.side === "human"
-            ? "white"
-            : "purple";
-
-    ctx.fillStyle =
-        state.side === "human"
-            ? "#4da6ff"
-            : "#8b36ff";
+    /*
+       Zombie body
+    */
 
     ctx.beginPath();
 
     ctx.arc(
-        player.x,
-        player.y,
-        player.radius,
-        0,
-        Math.PI * 2
+      enemy.x,
+      enemy.y,
+      enemy.radius,
+      0,
+      Math.PI * 2
     );
 
+
+    ctx.fillStyle =
+      state.side === "zombie"
+        ? "#8d45a8"
+        : "#4b9b59";
+
+
     ctx.fill();
+
 
     ctx.restore();
 
 
-    /* ENEMIES */
+    /*
+       Health bar
+    */
 
-    enemies.forEach(enemy => {
+    const barWidth = 36;
 
-        ctx.fillStyle =
-            enemy.infected
-                ? "#9b4dff"
-                : "#4cdb55";
-
-        ctx.beginPath();
-
-        ctx.arc(
-            enemy.x,
-            enemy.y,
-            enemy.radius,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
+    const healthPercent =
+      Math.max(
+        0,
+        enemy.health /
+        enemy.maxHealth
+      );
 
 
-        /* HEALTH */
+    ctx.fillStyle =
+      "#111";
 
-        const healthWidth = 40;
+    ctx.fillRect(
+      enemy.x -
+        barWidth / 2,
+      enemy.y - 28,
+      barWidth,
+      5
+    );
 
-        ctx.fillStyle =
-            "#111";
 
-        ctx.fillRect(
-            enemy.x - 20,
-            enemy.y - 30,
-            healthWidth,
-            5
-        );
+    ctx.fillStyle =
+      "#e33";
 
-        ctx.fillStyle =
-            "#ff3333";
+    ctx.fillRect(
+      enemy.x -
+        barWidth / 2,
+      enemy.y - 28,
+      barWidth *
+        healthPercent,
+      5
+    );
 
-        ctx.fillRect(
-            enemy.x - 20,
-            enemy.y - 30,
-            healthWidth *
-            (
-                enemy.health /
-                enemy.maxHealth
-            ),
-            5
-        );
+  });
 
-    });
+
+  /*
+     PLAYER
+  */
+
+  ctx.save();
+
+
+  ctx.beginPath();
+
+  ctx.arc(
+    player.x,
+    player.y,
+    player.radius,
+    0,
+    Math.PI * 2
+  );
+
+
+  ctx.fillStyle =
+    state.side === "zombie"
+      ? "#9c4ed8"
+      : "#eeeeee";
+
+
+  ctx.fill();
+
+
+  ctx.shadowBlur = 15;
+
+  ctx.shadowColor =
+    state.side === "zombie"
+      ? "#a84dff"
+      : "#ffffff";
+
+
+  ctx.restore();
+
+
+  /*
+     AIM DIRECTION
+  */
+
+  const aimLength = 35;
+
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    player.x,
+    player.y
+  );
+
+  ctx.lineTo(
+    player.x +
+      player.aimX *
+      aimLength,
+
+    player.y +
+      player.aimY *
+      aimLength
+  );
+
+
+  ctx.strokeStyle =
+    "#ffffff";
+
+  ctx.lineWidth = 3;
+
+  ctx.stroke();
 
 }
 
 
-/* =====================================================
+/* =========================================================
    GAME LOOP
-===================================================== */
-
-let gameRunning = false;
+   ========================================================= */
 
 function startGameLoop() {
 
-    if (gameRunning) return;
+  if (gameLoopId) {
 
-    gameRunning = true;
+    cancelAnimationFrame(
+      gameLoopId
+    );
 
-    gameLoop();
+  }
+
+
+  gameRunning = true;
+
+  gameLoop();
 
 }
 
 
 function gameLoop() {
 
-    if (!gameRunning) return;
+  if (!gameRunning) {
+
+    return;
+
+  }
+
+
+  if (!paused) {
 
     updateGame();
 
     drawRoom();
 
+  }
+
+
+  gameLoopId =
     requestAnimationFrame(
-        gameLoop
+      gameLoop
     );
 
 }
 
 
-/* =====================================================
+/* =========================================================
    UPDATE GAME
-===================================================== */
+   ========================================================= */
 
 function updateGame() {
 
-    if (paused) return;
+  if (!canvas) return;
 
 
-    /* Enemy AI */
+  /*
+     LEFT JOYSTICK MOVEMENT
+  */
 
-    enemies.forEach(enemy => {
+  if (
+    joystickData.left.active
+  ) {
 
-        const dx =
-            player.x -
-            enemy.x;
+    player.x +=
+      joystickData.left.x *
+      player.speed;
 
-        const dy =
-            player.y -
-            enemy.y;
+    player.y +=
+      joystickData.left.y *
+      player.speed;
 
-        const distance =
-            Math.sqrt(
-                dx * dx +
-                dy * dy
-            );
-
-
-        if (distance > 35) {
-
-            enemy.x +=
-                dx / distance *
-                enemy.speed;
-
-            enemy.y +=
-                dy / distance *
-                enemy.speed;
-
-        }
+  }
 
 
-        if (
-            distance < 38
-        ) {
+  /*
+     RIGHT JOYSTICK AIM
+  */
 
-            if (
-                state.side ===
-                "human"
-            ) {
+  if (
+    joystickData.right.active
+  ) {
 
-                state.health -= .05;
+    const ax =
+      joystickData.right.x;
 
-            } else {
+    const ay =
+      joystickData.right.y;
 
-                /* Zombie attacks students */
 
-                enemy.health -= .02;
+    const length =
+      Math.sqrt(
+        ax * ax +
+        ay * ay
+      );
 
-                if (
-                    !enemy.infected &&
-                    enemy.health <
-                    enemy.maxHealth * .5
-                ) {
 
-                    enemy.infected =
-                        true;
+    if (length > 0.15) {
 
-                }
+      player.aimX =
+        ax / length;
 
-            }
+      player.aimY =
+        ay / length;
 
-            updateHUD();
+    }
 
-        }
+  }
+
+
+  /*
+     PLAYER BOUNDS
+  */
+
+  player.x =
+    Math.max(
+      35,
+      Math.min(
+        canvas.width - 35,
+        player.x
+      )
+    );
+
+
+  player.y =
+    Math.max(
+      35,
+      Math.min(
+        canvas.height - 35,
+        player.y
+      )
+    );
+
+
+  /*
+     ENEMY AI
+  */
+
+  enemies.forEach(enemy => {
+
+    if (enemy.dead) return;
+
+
+    const dx =
+      player.x -
+      enemy.x;
+
+
+    const dy =
+      player.y -
+      enemy.y;
+
+
+    const distance =
+      Math.sqrt(
+        dx * dx +
+        dy * dy
+      );
+
+
+    if (distance > 1) {
+
+      enemy.x +=
+        (dx / distance) *
+        enemy.speed;
+
+      enemy.y +=
+        (dy / distance) *
+        enemy.speed;
+
+    }
+
+
+    /*
+       ATTACK / BITE
+    */
+
+    if (distance < 45) {
+
+      if (
+        state.side === "human"
+      ) {
+
+        state.health -=
+          0.05;
+
+      } else {
+
+        enemy.health -=
+          0.02;
+
+        enemy.infected = true;
+
+      }
+
+    }
+
+  });
+
+
+  /*
+     REMOVE DEAD ENEMIES
+  */
+
+  enemies =
+    enemies.filter(enemy => {
+
+      if (
+        enemy.health <= 0
+      ) {
+
+        enemy.dead = true;
+
+        return false;
+
+      }
+
+      return true;
 
     });
 
 
-    /* Remove dead enemies */
+  /*
+     ROOM COMPLETE
+  */
 
-    enemies =
-        enemies.filter(
-            enemy =>
-                enemy.health > 0
-        );
+  if (
+    enemies.length === 0
+  ) {
 
+    nextRoom();
 
-    /* Room complete */
+    return;
 
-    if (
-        enemies.length === 0
-    ) {
-
-        nextRoom();
-
-    }
+  }
 
 
-    /* Player death */
+  /*
+     PLAYER DEATH
+  */
 
-    if (
-        state.health <= 0
-    ) {
+  if (
+    state.health <= 0
+  ) {
 
-        loseGame();
+    state.health = 0;
 
-    }
+    loseGame();
+
+  }
+
+
+  updateHUD();
 
 }
 
 
-/* =====================================================
+/* =========================================================
    ATTACK
-===================================================== */
+   ========================================================= */
 
 function attack() {
 
-    if (paused) return;
+  if (
+    !gameRunning ||
+    paused
+  ) {
 
-    playClick();
+    return;
 
-
-    if (
-        state.side ===
-        "zombie"
-    ) {
-
-        /* ZOMBIE = BITE ONLY */
-
-        enemies.forEach(enemy => {
-
-            const dx =
-                enemy.x -
-                player.x;
-
-            const dy =
-                enemy.y -
-                player.y;
-
-            const distance =
-                Math.sqrt(
-                    dx * dx +
-                    dy * dy
-                );
-
-            if (
-                distance < 100
-            ) {
-
-                enemy.health -= 25;
-
-                enemy.infected =
-                    true;
-
-            }
-
-        });
-
-        return;
-
-    }
+  }
 
 
-    /* HUMAN WEAPON */
+  playClick();
+
+
+  /*
+     ZOMBIE ATTACK
+     Only bite.
+  */
+
+  if (
+    state.side === "zombie"
+  ) {
+
+    let closest = null;
+
+    let closestDistance =
+      Infinity;
+
 
     enemies.forEach(enemy => {
 
-        const dx =
-            enemy.x -
-            player.x;
+      const dx =
+        enemy.x -
+        player.x;
 
-        const dy =
-            enemy.y -
-            player.y;
+      const dy =
+        enemy.y -
+        player.y;
 
-        const distance =
-            Math.sqrt(
-                dx * dx +
-                dy * dy
-            );
+      const distance =
+        Math.sqrt(
+          dx * dx +
+          dy * dy
+        );
 
-        if (
-            distance < 150
-        ) {
 
-            enemy.health -=
-                state.weapon.damage;
+      if (
+        distance < 100 &&
+        distance <
+          closestDistance
+      ) {
 
-        }
+        closest =
+          enemy;
+
+        closestDistance =
+          distance;
+
+      }
 
     });
+
+
+    if (closest) {
+
+      closest.health -= 25;
+
+      closest.infected = true;
+
+    }
+
+
+    return;
+
+  }
+
+
+  /*
+     HUMAN WEAPON ATTACK
+  */
+
+  const damage =
+    state.weapon
+      ? state.weapon.damage
+      : 5;
+
+
+  enemies.forEach(enemy => {
+
+    const dx =
+      enemy.x -
+      player.x;
+
+    const dy =
+      enemy.y -
+      player.y;
+
+
+    const distance =
+      Math.sqrt(
+        dx * dx +
+        dy * dy
+      );
+
+
+    if (distance < 150) {
+
+      /*
+         Check direction
+      */
+
+      const directionX =
+        dx / Math.max(
+          distance,
+          1
+        );
+
+      const directionY =
+        dy / Math.max(
+          distance,
+          1
+        );
+
+
+      const dot =
+        directionX *
+          player.aimX +
+        directionY *
+          player.aimY;
+
+
+      /*
+         Attack forward.
+         But allow close enemies.
+      */
+
+      if (
+        distance < 65 ||
+        dot > 0.25
+      ) {
+
+        enemy.health -=
+          damage;
+
+      }
+
+    }
+
+  });
+
+
+  updateHUD();
 
 }
 
 
-/* =====================================================
+/* =========================================================
    NEXT ROOM
-===================================================== */
+   ========================================================= */
 
 function nextRoom() {
 
-    if (state.room >= 6) {
+  if (
+    state.room >= 6
+  ) {
 
-        winGame();
+    winGame();
 
-        return;
+    return;
 
-    }
-
-
-    state.room++;
-
-    state.level =
-        state.room;
+  }
 
 
-    saveGame();
+  state.room++;
+
+  state.level =
+    state.room;
 
 
-    if (
-        state.room === 4
-    ) {
-
-        showCheckpoint();
-
-    }
+  saveGame();
 
 
-    setTimeout(() => {
+  /*
+     ROOM 4 CHECKPOINT
+  */
 
-        createRoom();
+  if (
+    state.room === 4
+  ) {
 
-    }, 500);
+    showCheckpoint();
+
+  }
+
+
+  setTimeout(() => {
+
+    if (!gameRunning) return;
+
+    createRoom();
+
+    updateHUD();
+
+  }, 500);
 
 }
 
 
-/* =====================================================
+/* =========================================================
    HUD
-===================================================== */
+   ========================================================= */
 
 function updateHUD() {
 
+  const healthBar =
     document.getElementById(
-        "healthFill"
-    ).style.width =
-        Math.max(
-            0,
-            state.health /
-            state.maxHealth *
+      "healthBar"
+    );
+
+
+  const healthText =
+    document.getElementById(
+      "healthText"
+    );
+
+
+  const roomText =
+    document.getElementById(
+      "roomText"
+    );
+
+
+  const levelText =
+    document.getElementById(
+      "levelText"
+    );
+
+
+  const playerName =
+    document.getElementById(
+      "playerName"
+    );
+
+
+  const weaponName =
+    document.getElementById(
+      "weaponName"
+    );
+
+
+  if (healthBar) {
+
+    const percent =
+      Math.max(
+        0,
+        Math.min(
+          100,
+          (state.health /
+            state.maxHealth) *
             100
-        ) + "%";
+        )
+      );
+
+    healthBar.style.width =
+      `${percent}%`;
+
+  }
 
 
-    document.getElementById(
-        "healthText"
-    ).innerText =
-        Math.ceil(
-            state.health
-        ) +
-        " / " +
-        state.maxHealth;
+  if (healthText) {
+
+    healthText.textContent =
+      `${Math.ceil(
+        state.health
+      )}/${state.maxHealth}`;
+
+  }
 
 
-    document.getElementById(
-        "roomNumber"
-    ).innerText =
-        state.room;
+  if (roomText) {
+
+    roomText.textContent =
+      rooms[state.room]
+        ? rooms[state.room].name
+        : `ROOM ${state.room}`;
+
+  }
 
 
-    document.getElementById(
-        "levelNumber"
-    ).innerText =
-        state.level;
+  if (levelText) {
+
+    levelText.textContent =
+      `LEVEL ${state.level}`;
+
+  }
 
 
-    document.getElementById(
-        "playerName"
-    ).innerText =
-        state.character
-            ? state.character.name
-            : "PLAYER";
+  if (playerName) {
+
+    playerName.textContent =
+      state.character
+        ? state.character.name
+        : "PLAYER";
+
+  }
 
 
-    document.getElementById(
-        "weaponName"
-    ).innerText =
-        state.side === "zombie"
-            ? "KAGAT"
-            : state.weapon.name;
+  if (weaponName) {
 
+    weaponName.textContent =
+      state.weapon
+        ? `${state.weapon.name} • ${state.weapon.damage} DAMAGE`
+        : "WALAY ARMAS";
 
-    document.getElementById(
-        "weaponDamage"
-    ).innerText =
-        state.side === "zombie"
-            ? "DAMAGE 25"
-            : "DAMAGE " +
-              state.weapon.damage;
+  }
 
 }
 
 
-/* =====================================================
+/* =========================================================
    PAUSE
-===================================================== */
-
-let paused = false;
-
+   ========================================================= */
 
 function pauseGame() {
 
-    paused = true;
+  if (
+    !gameRunning ||
+    paused
+  ) {
 
-    document
-        .getElementById(
-            "pauseScreen"
-        )
-        .classList.remove(
-            "hidden"
-        );
+    return;
+
+  }
+
+
+  playClick();
+
+  paused = true;
+
+  showScreen("pauseScreen");
 
 }
 
+
+/* =========================================================
+   RESUME
+   ========================================================= */
 
 function resumeGame() {
 
-    document
-        .getElementById(
-            "pauseScreen"
-        )
-        .classList.add(
-            "hidden"
-        );
+  if (
+    countdownRunning
+  ) {
+
+    return;
+
+  }
 
 
-    let count = 3;
-
-    const old =
-        document.querySelector(
-            ".pauseBox h1"
-        );
+  playClick();
 
 
-    old.innerText =
-        count;
+  countdownRunning =
+    true;
 
 
-    const timer =
-        setInterval(() => {
-
-            count--;
-
-            old.innerText =
-                count;
-
-            if (
-                count <= 0
-            ) {
-
-                clearInterval(timer);
-
-                old.innerText =
-                    "PADAYON!";
-
-                paused = false;
-
-            }
-
-        }, 1000);
-
-}
+  showScreen("gameScreen");
 
 
-/* =====================================================
-   SETTINGS
-===================================================== */
-
-function openSettings(
-    fromGame = false
-) {
-
-    playClick();
-
-    state.settings.fromGame =
-        fromGame;
-
-    document
-        .getElementById(
-            "masterVolume"
-        ).value =
-        state.settings.master;
-
-    document
-        .getElementById(
-            "musicVolume"
-        ).value =
-        state.settings.music;
-
-    document
-        .getElementById(
-            "sfxVolume"
-        ).value =
-        state.settings.sfx;
-
-    document
-        .getElementById(
-            "vibrationToggle"
-        ).checked =
-        state.settings.vibration;
-
-    document
-        .getElementById(
-            "fullscreenToggle"
-        ).checked =
-        state.settings.fullscreen;
-
-
-    showScreen(
-        "settingsScreen"
+  const countdown =
+    document.getElementById(
+      "countdownText"
     );
 
+
+  if (!countdown) {
+
+    paused = false;
+
+    countdownRunning =
+      false;
+
+    return;
+
+  }
+
+
+  let number = 3;
+
+
+  countdown.textContent =
+    number;
+
+
+  const timer =
+    setInterval(() => {
+
+      number--;
+
+
+      if (
+        number > 0
+      ) {
+
+        countdown.textContent =
+          number;
+
+      } else {
+
+        clearInterval(timer);
+
+        countdown.textContent =
+          "PADAYON!";
+
+
+        setTimeout(() => {
+
+          countdown.textContent =
+            "";
+
+          paused = false;
+
+          countdownRunning =
+            false;
+
+        }, 700);
+
+      }
+
+    }, 1000);
+
 }
 
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+let settingsFromGame =
+  false;
+
+
+function openSettings(
+  fromGame = false
+) {
+
+  playClick();
+
+  settingsFromGame =
+    fromGame;
+
+
+  const master =
+    document.getElementById(
+      "masterVolume"
+    );
+
+  const music =
+    document.getElementById(
+      "musicVolume"
+    );
+
+  const sfx =
+    document.getElementById(
+      "sfxVolume"
+    );
+
+  const vibration =
+    document.getElementById(
+      "vibrationToggle"
+    );
+
+
+  if (master) {
+
+    master.value =
+      state.settings.master;
+
+  }
+
+
+  if (music) {
+
+    music.value =
+      state.settings.music;
+
+  }
+
+
+  if (sfx) {
+
+    sfx.value =
+      state.settings.sfx;
+
+  }
+
+
+  if (vibration) {
+
+    vibration.checked =
+      state.settings.vibration;
+
+  }
+
+
+  updateAudio();
+
+  showScreen(
+    "settingsScreen"
+  );
+
+}
+
+
+/* =========================================================
+   CLOSE SETTINGS
+   ========================================================= */
 
 function closeSettings() {
 
-    if (
-        state.settings.fromGame
-    ) {
+  playClick();
 
-        showScreen("gameScreen");
 
-        delete state.settings.fromGame;
+  if (
+    settingsFromGame
+  ) {
 
-        return;
+    showScreen(
+      "gameScreen"
+    );
 
-    }
+  } else {
 
     showMenu();
 
+  }
+
 }
 
+
+/* =========================================================
+   SAVE SETTINGS
+   ========================================================= */
 
 function saveSettings() {
 
+  playClick();
+
+
+  const master =
+    document.getElementById(
+      "masterVolume"
+    );
+
+  const music =
+    document.getElementById(
+      "musicVolume"
+    );
+
+  const sfx =
+    document.getElementById(
+      "sfxVolume"
+    );
+
+  const vibration =
+    document.getElementById(
+      "vibrationToggle"
+    );
+
+
+  if (master) {
+
     state.settings.master =
-        Number(
-            document.getElementById(
-                "masterVolume"
-            ).value
-        );
+      Number(master.value);
+
+  }
+
+
+  if (music) {
 
     state.settings.music =
-        Number(
-            document.getElementById(
-                "musicVolume"
-            ).value
-        );
+      Number(music.value);
+
+  }
+
+
+  if (sfx) {
 
     state.settings.sfx =
-        Number(
-            document.getElementById(
-                "sfxVolume"
-            ).value
-        );
+      Number(sfx.value);
+
+  }
+
+
+  if (vibration) {
 
     state.settings.vibration =
-        document.getElementById(
-            "vibrationToggle"
-        ).checked;
+      vibration.checked;
 
-    state.settings.fullscreen =
-        document.getElementById(
-            "fullscreenToggle"
-        ).checked;
+  }
 
 
-    updateAudio();
+  updateAudio();
 
-    saveGame();
+  saveGame();
 
-    alert(
-        "Na-save na ang setting."
-    );
+
+  alert(
+    "Na-save na ang settings."
+  );
 
 }
 
 
-/* =====================================================
+/* =========================================================
    SHOP
-===================================================== */
+   ========================================================= */
 
 function openShop() {
 
-    playClick();
+  playClick();
 
-    renderShop();
+  renderShop();
 
-    showScreen(
-        "shopScreen"
-    );
+  showScreen(
+    "shopScreen"
+  );
 
 }
 
+
+/* =========================================================
+   RENDER SHOP
+   ========================================================= */
 
 function renderShop() {
 
+  const container =
     document.getElementById(
-        "coinsText"
-    ).innerText =
-        state.coins;
+      "shopList"
+    );
 
 
-    const container =
-        document.getElementById(
-            "shopItems"
+  const coins =
+    document.getElementById(
+      "shopCoins"
+    );
+
+
+  if (!container) return;
+
+
+  container.innerHTML = "";
+
+
+  if (coins) {
+
+    coins.textContent =
+      state.coins;
+
+  }
+
+
+  weapons.forEach(weapon => {
+
+    const item =
+      document.createElement("div");
+
+    item.className =
+      "shop-item";
+
+
+    const owned =
+      state.purchasedWeapons
+        .includes(
+          weapon.name
         );
 
-    container.innerHTML = "";
+
+    const equipped =
+      state.weapon &&
+      state.weapon.name ===
+      weapon.name;
 
 
-    weapons.forEach(weapon => {
+    item.innerHTML = `
 
-        const owned =
-            state.purchasedWeapons
-                .includes(
-                    weapon.name
-                );
+      <div class="shop-name">
+        ${weapon.name}
+      </div>
+
+      <div class="shop-info">
+        DAMAGE: ${weapon.damage}
+      </div>
+
+      <div class="shop-info">
+        PRESYO: ${weapon.price}
+      </div>
+
+    `;
 
 
-        const div =
-            document.createElement(
-                "div"
+    const button =
+      document.createElement(
+        "button"
+      );
+
+
+    if (equipped) {
+
+      button.textContent =
+        "NA-EQUIP NA";
+
+      button.disabled =
+        true;
+
+    } else if (owned) {
+
+      button.textContent =
+        "EQUIP";
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          playClick();
+
+          state.weapon =
+            weapon;
+
+          saveGame();
+
+          renderShop();
+
+          updateHUD();
+
+        }
+      );
+
+    } else {
+
+      button.textContent =
+        "PALIT";
+
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          playClick();
+
+
+          if (
+            state.coins <
+            weapon.price
+          ) {
+
+            alert(
+              "Kulang ang coins."
             );
 
-        div.className =
-            "shopItem";
+            return;
+
+          }
 
 
-        div.innerHTML = `
-
-            <h3>${weapon.name}</h3>
-
-            <p>
-                DAMAGE:
-                ${weapon.damage}
-            </p>
-
-            <p>
-                PRESYO:
-                ${weapon.price}
-            </p>
-
-            <button>
-                ${
-                    owned
-                        ? "EQUIP"
-                        : "PALIT"
-                }
-            </button>
-        `;
+          state.coins -=
+            weapon.price;
 
 
-        div
-            .querySelector("button")
-            .onclick = () => {
-
-                if (owned) {
-
-                    state.weapon =
-                        weapon;
-
-                    saveGame();
-
-                    alert(
-                        weapon.name +
-                        " ang imong gigamit."
-                    );
-
-                    return;
-
-                }
+          state.purchasedWeapons
+            .push(
+              weapon.name
+            );
 
 
-                if (
-                    state.coins >=
-                    weapon.price
-                ) {
-
-                    state.coins -=
-                        weapon.price;
-
-                    state.purchasedWeapons
-                        .push(
-                            weapon.name
-                        );
-
-                    saveGame();
-
-                    renderShop();
-
-                } else {
-
-                    alert(
-                        "Kulang imong kwarta."
-                    );
-
-                }
-
-            };
+          state.weapon =
+            weapon;
 
 
-        container.appendChild(
-            div
-        );
+          saveGame();
 
-    });
+          renderShop();
+
+          updateHUD();
+
+
+          alert(
+            `${weapon.name} na-paliton ug na-equip.`
+          );
+
+        }
+      );
+
+    }
+
+
+    item.appendChild(
+      button
+    );
+
+
+    container.appendChild(
+      item
+    );
+
+  });
 
 }
 
 
-/* =====================================================
+/* =========================================================
    CINEMATICS
-===================================================== */
+   ========================================================= */
 
-let cinematicTimeout;
+let cinematicTimer =
+  null;
+
+let cinematicCallback =
+  null;
 
 
 function showCheckpoint() {
 
-    showCinematic(
-        "assets/videos/checkpoint.mp4",
-        10000
-    );
+  showCinematic(
+    "assets/videos/checkpoint.mp4",
+    10000,
+    null
+  );
 
 }
 
 
 function winGame() {
 
-    gameRunning = false;
+  gameRunning = false;
 
-    stopMusic();
+  paused = false;
 
-    saveGame();
 
-    showCinematic(
-        "assets/videos/victory.mp4",
-        30000,
-        () => {
+  if (gameLoopId) {
 
-            showMenu();
-
-        }
+    cancelAnimationFrame(
+      gameLoopId
     );
+
+    gameLoopId = null;
+
+  }
+
+
+  stopMusic();
+
+  saveGame();
+
+
+  showCinematic(
+    "assets/videos/victory.mp4",
+    30000,
+    () => {
+
+      showMenu();
+
+    }
+  );
 
 }
 
 
 function loseGame() {
 
-    gameRunning = false;
+  gameRunning = false;
 
-    stopMusic();
+  paused = false;
 
-    showCinematic(
-        "assets/videos/defeat.mp4",
-        30000,
-        () => {
 
-            showMenu();
+  if (gameLoopId) {
 
-        }
+    cancelAnimationFrame(
+      gameLoopId
     );
+
+    gameLoopId = null;
+
+  }
+
+
+  stopMusic();
+
+
+  showCinematic(
+    "assets/videos/defeat.mp4",
+    30000,
+    () => {
+
+      showMenu();
+
+    }
+  );
 
 }
 
+
+/* =========================================================
+   SHOW CINEMATIC
+   ========================================================= */
 
 function showCinematic(
-    src,
-    duration,
-    callback
+  videoSrc,
+  duration,
+  callback
 ) {
 
-    const overlay =
-        document.getElementById(
-            "cinematicScreen"
-        );
-
-    const video =
-        document.getElementById(
-            "cinematicVideo"
-        );
-
-
-    overlay.classList.remove(
-        "hidden"
-    );
-
-
-    video.src = src;
-
-    video.currentTime = 0;
-
-    video.play().catch(() => {});
-
-
-    clearTimeout(
-        cinematicTimeout
-    );
-
-
-    cinematicTimeout =
-        setTimeout(
-            () => {
-
-                closeCinematic(
-                    callback
-                );
-
-            },
-            duration
-        );
-
-
+  const screen =
     document.getElementById(
-        "cinematicSkip"
-    ).onclick = () => {
+      "cinematicScreen"
+    );
 
-        closeCinematic(
-            callback
-        );
 
-    };
+  const video =
+    document.getElementById(
+      "cinematicVideo"
+    );
+
+
+  const skip =
+    document.getElementById(
+      "cinematicSkip"
+    );
+
+
+  if (!screen || !video) {
+
+    if (callback) callback();
+
+    return;
+
+  }
+
+
+  cinematicCallback =
+    callback;
+
+
+  clearTimeout(
+    cinematicTimer
+  );
+
+
+  video.src =
+    videoSrc;
+
+
+  video.currentTime =
+    0;
+
+
+  video.muted = false;
+
+
+  showScreen(
+    "cinematicScreen"
+  );
+
+
+  try {
+
+    video.play().catch(
+      () => {}
+    );
+
+  } catch (error) {}
+
+
+  cinematicTimer =
+    setTimeout(() => {
+
+      closeCinematic();
+
+    }, duration);
+
+
+  if (skip) {
+
+    skip.onclick =
+      () => {
+
+        playClick();
+
+        closeCinematic();
+
+      };
+
+  }
 
 }
 
 
-function closeCinematic(
-    callback
-) {
+/* =========================================================
+   CLOSE CINEMATIC
+   ========================================================= */
 
-    clearTimeout(
-        cinematicTimeout
+function closeCinematic() {
+
+  clearTimeout(
+    cinematicTimer
+  );
+
+
+  const video =
+    document.getElementById(
+      "cinematicVideo"
     );
 
 
-    const video =
-        document.getElementById(
-            "cinematicVideo"
-        );
-
+  if (video) {
 
     video.pause();
 
     video.removeAttribute(
-        "src"
+      "src"
     );
 
     video.load();
 
-
-    document
-        .getElementById(
-            "cinematicScreen"
-        )
-        .classList.add(
-            "hidden"
-        );
+  }
 
 
-    if (callback) {
+  const callback =
+    cinematicCallback;
 
-        callback();
 
-    } else {
+  cinematicCallback =
+    null;
 
-        startMusic();
 
-    }
+  if (callback) {
+
+    callback();
+
+  } else {
+
+    /*
+       Checkpoint:
+       balik sa game.
+    */
+
+    showScreen(
+      "gameScreen"
+    );
+
+    startMusic();
+
+  }
 
 }
 
 
-/* =====================================================
-   YAWA
-===================================================== */
-
-let yawaTimer = null;
-
+/* =========================================================
+   YAWA SOUND
+   ========================================================= */
 
 function startYawaTimer() {
 
-    clearInterval(
-        yawaTimer
-    );
+  stopYawaTimer();
 
 
-    yawaTimer =
-        setInterval(() => {
+  yawaTimer =
+    setInterval(() => {
 
-            if (
-                !gameRunning ||
-                paused
-            ) {
+      /*
+         YAWA ONLY DURING GAMEPLAY
+      */
 
-                return;
+      const gameScreen =
+        document.getElementById(
+          "gameScreen"
+        );
 
-            }
+
+      const playing =
+        gameScreen &&
+        gameScreen.classList
+          .contains("active");
 
 
-            if (
-                !document
-                    .getElementById(
-                        "gameScreen"
-                    )
-                    .classList
-                    .contains(
-                        "hidden"
-                    )
-            ) {
+      if (
+        gameRunning &&
+        !paused &&
+        playing
+      ) {
 
-                yawaSound.volume =
-                    state.settings.master *
-                    state.settings.sfx;
+        playYawa();
 
-                yawaSound.currentTime = 0;
+      }
 
-                yawaSound
-                    .play()
-                    .catch(() => {});
-
-            }
-
-        }, 3000);
+    }, 3000);
 
 }
 
 
-/* =====================================================
-   SAVE
-===================================================== */
+function stopYawaTimer() {
+
+  if (yawaTimer) {
+
+    clearInterval(
+      yawaTimer
+    );
+
+    yawaTimer = null;
+
+  }
+
+}
+
+
+function playYawa() {
+
+  if (!yawaSound) return;
+
+
+  try {
+
+    yawaSound.currentTime =
+      0;
+
+    yawaSound.volume =
+      state.settings.master *
+      state.settings.sfx;
+
+    yawaSound.play().catch(
+      () => {}
+    );
+
+  } catch (error) {}
+
+}
+
+
+/* =========================================================
+   SAVE GAME
+   ========================================================= */
 
 function saveGame() {
 
-    try {
+  try {
 
-        localStorage.setItem(
+    localStorage.setItem(
+      "NIHS_ZOMBIE_SAVE",
+      JSON.stringify(state)
+    );
 
-            "NIHS_ZOMBIE_SAVE",
+  } catch (error) {
 
-            JSON.stringify(
-                state
-            )
+    console.warn(
+      "Dili ma-save ang game.",
+      error
+    );
 
-        );
-
-    } catch (error) {
-
-        console.log(
-            "Save error:",
-            error
-        );
-
-    }
+  }
 
 }
 
 
-/* =====================================================
-   BACK / QUIT
-===================================================== */
-
-function backToMenu() {
-
-    playClick();
-
-    showMenu();
-
-}
-
-
-function quitGame() {
-
-    paused = false;
-
-    gameRunning = false;
-
-    stopMusic();
-
-    document
-        .getElementById(
-            "pauseScreen"
-        )
-        .classList.add(
-            "hidden"
-        );
-
-    showMenu();
-
-}
-
-
-/* =====================================================
-   MOBILE JOYSTICKS
-===================================================== */
-
-function setupJoystick(
-    joystickId,
-    movementCallback
-) {
-
-    const joystick =
-        document.getElementById(
-            joystickId
-        );
-
-    const knob =
-        joystick.querySelector(
-            ".joystickKnob"
-        );
-
-
-    let active = false;
-
-
-    function move(event) {
-
-        if (!active) return;
-
-
-        const rect =
-            joystick
-                .getBoundingClientRect();
-
-
-        const touch =
-            event.touches
-                ? event.touches[0]
-                : event;
-
-
-        let x =
-            touch.clientX -
-            (
-                rect.left +
-                rect.width / 2
-            );
-
-        let y =
-            touch.clientY -
-            (
-                rect.top +
-                rect.height / 2
-            );
-
-
-        const max =
-            rect.width / 2 -
-            25;
-
-
-        const distance =
-            Math.sqrt(
-                x*x +
-                y*y
-            );
-
-
-        if (
-            distance > max
-        ) {
-
-            x =
-                x / distance *
-                max;
-
-            y =
-                y / distance *
-                max;
-
-        }
-
-
-        knob.style.transform =
-            `translate(
-                calc(-50% + ${x}px),
-                calc(-50% + ${y}px)
-            )`;
-
-
-        movementCallback(
-            x / max,
-            y / max
-        );
-
-    }
-
-
-    function end() {
-
-        active = false;
-
-        knob.style.transform =
-            "translate(-50%,-50%)";
-
-        movementCallback(
-            0,
-            0
-        );
-
-    }
-
-
-    joystick.addEventListener(
-        "touchstart",
-        e => {
-
-            active = true;
-
-            e.preventDefault();
-
-        },
-        { passive:false }
-    );
-
-
-    joystick.addEventListener(
-        "touchmove",
-        e => {
-
-            move(e);
-
-            e.preventDefault();
-
-        },
-        { passive:false }
-    );
-
-
-    joystick.addEventListener(
-        "touchend",
-        end
-    );
-
-}
-
-
-/* LEFT JOYSTICK = MOVEMENT */
-
-setupJoystick(
-    "leftJoystick",
-    (x,y) => {
-
-        if (paused) return;
-
-        player.x +=
-            x *
-            player.speed;
-
-        player.y +=
-            y *
-            player.speed;
-
-
-        player.x =
-            Math.max(
-                30,
-                Math.min(
-                    canvas.width - 30,
-                    player.x
-                )
-            );
-
-
-        player.y =
-            Math.max(
-                30,
-                Math.min(
-                    canvas.height - 30,
-                    player.y
-                )
-            );
-
-    }
-);
-
-
-/* RIGHT JOYSTICK = AIM */
-
-setupJoystick(
-    "rightJoystick",
-    (x,y) => {
-
-        /*
-
-           Ang direction gikan
-           sa right joystick
-           gamiton nato sa attack
-           system sa sunod nga
-           expansion.
-
-        */
-
-    }
-);
-
-
-/* =====================================================
-   ATTACK BUTTON
-===================================================== */
-
-document
-    .getElementById(
-        "attackButton"
-    )
-    .addEventListener(
-        "touchstart",
-        e => {
-
-            e.preventDefault();
-
-            attack();
-
-        }
-    );
-
-
-/* =====================================================
-   START
-===================================================== */
-
-window.addEventListener(
-    "load",
-    () => {
-
-        loadSettings();
-
-        startIntro();
-
-    }
-);
-
-
-/* =====================================================
-   LOAD SETTINGS
-===================================================== */
+/* =========================================================
+   LOAD SETTINGS / SAVE
+   ========================================================= */
 
 function loadSettings() {
 
-    const saved =
-        localStorage.getItem(
-            "NIHS_ZOMBIE_SAVE"
+  const saved =
+    localStorage.getItem(
+      "NIHS_ZOMBIE_SAVE"
+    );
+
+
+  if (!saved) {
+
+    updateAudio();
+
+    return;
+
+  }
+
+
+  try {
+
+    const loaded =
+      JSON.parse(saved);
+
+
+    state = {
+
+      ...state,
+
+      ...loaded,
+
+      settings: {
+
+        ...state.settings,
+
+        ...(loaded.settings || {})
+
+      }
+
+    };
+
+
+    /*
+       Restore weapon
+    */
+
+    if (
+      loaded.weapon &&
+      loaded.weapon.name
+    ) {
+
+      const foundWeapon =
+        weapons.find(
+          weapon =>
+            weapon.name ===
+            loaded.weapon.name
         );
 
 
-    if (!saved) return;
+      if (foundWeapon) {
 
+        state.weapon =
+          foundWeapon;
 
-    try {
-
-        const data =
-            JSON.parse(saved);
-
-
-        if (
-            data.settings
-        ) {
-
-            state.settings =
-                {
-                    ...state.settings,
-                    ...data.settings
-                };
-
-        }
-
-
-        if (
-            data.coins !== undefined
-        ) {
-
-            state.coins =
-                data.coins;
-
-        }
-
-
-    } catch {
-
-        console.log(
-            "Wala pay valid settings."
-        );
+      }
 
     }
 
+
+    /*
+       Safety defaults
+    */
+
+    if (
+      !Array.isArray(
+        state.purchasedWeapons
+      )
+    ) {
+
+      state.purchasedWeapons = [
+        "CHALK",
+        "BOOK"
+      ];
+
+    }
+
+
+    updateAudio();
+
+  } catch (error) {
+
+    console.warn(
+      "Dili ma-load ang save.",
+      error
+    );
+
+  }
+
 }
+
+
+/* =========================================================
+   BACK TO MENU
+   ========================================================= */
+
+function backToMenu() {
+
+  playClick();
+
+  showMenu();
+
+}
+
+
+/* =========================================================
+   QUIT GAME
+   ========================================================= */
+
+function quitGame() {
+
+  playClick();
+
+
+  paused = false;
+
+  gameRunning = false;
+
+
+  if (gameLoopId) {
+
+    cancelAnimationFrame(
+      gameLoopId
+    );
+
+    gameLoopId = null;
+
+  }
+
+
+  stopYawaTimer();
+
+  stopMusic();
+
+  showMenu();
+
+}
+
+
+/* =========================================================
+   JOYSTICK SYSTEM
+   ========================================================= */
+
+function setupJoystick(
+  element,
+  type
+) {
+
+  if (!element) return;
+
+
+  let activePointer =
+    null;
+
+
+  function updateJoystick(
+    event
+  ) {
+
+    const rect =
+      element.getBoundingClientRect();
+
+
+    const centerX =
+      rect.left +
+      rect.width / 2;
+
+
+    const centerY =
+      rect.top +
+      rect.height / 2;
+
+
+    let dx =
+      event.clientX -
+      centerX;
+
+
+    let dy =
+      event.clientY -
+      centerY;
+
+
+    const maxDistance =
+      rect.width / 2;
+
+
+    const distance =
+      Math.sqrt(
+        dx * dx +
+        dy * dy
+      );
+
+
+    if (
+      distance >
+      maxDistance
+    ) {
+
+      dx =
+        dx / distance *
+        maxDistance;
+
+      dy =
+        dy / distance *
+        maxDistance;
+
+    }
+
+
+    const normalizedX =
+      dx /
+      maxDistance;
+
+
+    const normalizedY =
+      dy /
+      maxDistance;
+
+
+    joystickData[type] = {
+
+      active: true,
+
+      x: normalizedX,
+
+      y: normalizedY
+
+    };
+
+
+    const stick =
+      element.querySelector(
+        ".joystick-stick"
+      );
+
+
+    if (stick) {
+
+      stick.style.transform =
+        `translate(${dx}px, ${dy}px)`;
+
+    }
+
+  }
+
+
+  element.addEventListener(
+    "pointerdown",
+    event => {
+
+      event.preventDefault();
+
+      activePointer =
+        event.pointerId;
+
+
+      element.setPointerCapture(
+        event.pointerId
+      );
+
+
+      updateJoystick(event);
+
+    }
+  );
+
+
+  element.addEventListener(
+    "pointermove",
+    event => {
+
+      if (
+        activePointer !==
+        event.pointerId
+      ) {
+
+        return;
+
+      }
+
+
+      event.preventDefault();
+
+      updateJoystick(event);
+
+    }
+  );
+
+
+  function resetJoystick() {
+
+    activePointer = null;
+
+
+    joystickData[type] = {
+
+      active: false,
+
+      x: 0,
+
+      y: 0
+
+    };
+
+
+    const stick =
+      element.querySelector(
+        ".joystick-stick"
+      );
+
+
+    if (stick) {
+
+      stick.style.transform =
+        "translate(0, 0)";
+
+    }
+
+  }
+
+
+  element.addEventListener(
+    "pointerup",
+    resetJoystick
+  );
+
+
+  element.addEventListener(
+    "pointercancel",
+    resetJoystick
+  );
+
+
+  element.addEventListener(
+    "lostpointercapture",
+    resetJoystick
+  );
+
+}
+
+
+/* =========================================================
+   INITIALIZE JOYSTICKS
+   ========================================================= */
+
+function initializeJoysticks() {
+
+  const left =
+    document.getElementById(
+      "leftJoystick"
+    );
+
+
+  const right =
+    document.getElementById(
+      "rightJoystick"
+    );
+
+
+  setupJoystick(
+    left,
+    "left"
+  );
+
+
+  setupJoystick(
+    right,
+    "right"
+  );
+
+}
+
+
+/* =========================================================
+   ATTACK BUTTON
+   ========================================================= */
+
+function initializeAttackButton() {
+
+  const attackButton =
+    document.getElementById(
+      "attackButton"
+    );
+
+
+  if (!attackButton) return;
+
+
+  attackButton.addEventListener(
+    "pointerdown",
+    event => {
+
+      event.preventDefault();
+
+      attack();
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   MENU BUTTON CONNECTIONS
+   ========================================================= */
+
+function connectButtons() {
+
+  const startButton =
+    document.getElementById(
+      "start-button"
+    );
+
+
+  if (startButton) {
+
+    startButton.addEventListener(
+      "click",
+      () => {
+
+        playClick();
+
+        newGame();
+
+      }
+    );
+
+  }
+
+
+  const continueButton =
+    document.getElementById(
+      "continueButton"
+    );
+
+
+  if (continueButton) {
+
+    continueButton.addEventListener(
+      "click",
+      continueGame
+    );
+
+  }
+
+
+  const settingsButton =
+    document.getElementById(
+      "settingsButton"
+    );
+
+
+  if (settingsButton) {
+
+    settingsButton.addEventListener(
+      "click",
+      () => {
+
+        openSettings(false);
+
+      }
+    );
+
+  }
+
+
+  const shopButton =
+    document.getElementById(
+      "shopButton"
+    );
+
+
+  if (shopButton) {
+
+    shopButton.addEventListener(
+      "click",
+      openShop
+    );
+
+  }
+
+
+  const confirmButton =
+    document.getElementById(
+      "confirmCharacter"
+    );
+
+
+  if (confirmButton) {
+
+    confirmButton.addEventListener(
+      "click",
+      confirmCharacter
+    );
+
+  }
+
+
+  const humanButton =
+    document.getElementById(
+      "humanButton"
+    );
+
+
+  if (humanButton) {
+
+    humanButton.addEventListener(
+      "click",
+      () => {
+
+        chooseSide("human");
+
+      }
+    );
+
+  }
+
+
+  const zombieButton =
+    document.getElementById(
+      "zombieButton"
+    );
+
+
+  if (zombieButton) {
+
+    zombieButton.addEventListener(
+      "click",
+      () => {
+
+        chooseSide("zombie");
+
+      }
+    );
+
+  }
+
+
+  const pauseButton =
+    document.getElementById(
+      "pauseButton"
+    );
+
+
+  if (pauseButton) {
+
+    pauseButton.addEventListener(
+      "click",
+      pauseGame
+    );
+
+  }
+
+
+  const resumeButton =
+    document.getElementById(
+      "resumeButton"
+    );
+
+
+  if (resumeButton) {
+
+    resumeButton.addEventListener(
+      "click",
+      resumeGame
+    );
+
+  }
+
+
+  const pauseSettings =
+    document.getElementById(
+      "pauseSettingsButton"
+    );
+
+
+  if (pauseSettings) {
+
+    pauseSettings.addEventListener(
+      "click",
+      () => {
+
+        openSettings(true);
+
+      }
+    );
+
+  }
+
+
+  const quitButton =
+    document.getElementById(
+      "quitButton"
+    );
+
+
+  if (quitButton) {
+
+    quitButton.addEventListener(
+      "click",
+      quitGame
+    );
+
+  }
+
+
+  const saveSettingsButton =
+    document.getElementById(
+      "saveSettingsButton"
+    );
+
+
+  if (saveSettingsButton) {
+
+    saveSettingsButton.addEventListener(
+      "click",
+      saveSettings
+    );
+
+  }
+
+
+  const settingsBack =
+    document.getElementById(
+      "settingsBack"
+    );
+
+
+  if (settingsBack) {
+
+    settingsBack.addEventListener(
+      "click",
+      closeSettings
+    );
+
+  }
+
+
+  const shopBack =
+    document.getElementById(
+      "shopBack"
+    );
+
+
+  if (shopBack) {
+
+    shopBack.addEventListener(
+      "click",
+      backToMenu
+    );
+
+  }
+
+
+  const characterBack =
+    document.getElementById(
+      "characterBack"
+    );
+
+
+  if (characterBack) {
+
+    characterBack.addEventListener(
+      "click",
+      backToMenu
+    );
+
+  }
+
+
+  const sideBack =
+    document.getElementById(
+      "sideBack"
+    );
+
+
+  if (sideBack) {
+
+    sideBack.addEventListener(
+      "click",
+      () => {
+
+        showScreen(
+          "characterScreen"
+        );
+
+      }
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   GRADE BUTTON CONNECTIONS
+   ========================================================= */
+
+function connectGradeButtons() {
+
+  document
+    .querySelectorAll(
+      ".grade-button"
+    )
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const grade =
+            Number(
+              button.dataset.grade
+            );
+
+
+          selectGrade(
+            grade
+          );
+
+        }
+      );
+
+    });
+
+}
+
+
+/* =========================================================
+   AUDIO SLIDER LIVE UPDATE
+   ========================================================= */
+
+function connectAudioSliders() {
+
+  const master =
+    document.getElementById(
+      "masterVolume"
+    );
+
+  const music =
+    document.getElementById(
+      "musicVolume"
+    );
+
+  const sfx =
+    document.getElementById(
+      "sfxVolume"
+    );
+
+
+  if (master) {
+
+    master.addEventListener(
+      "input",
+      () => {
+
+        state.settings.master =
+          Number(master.value);
+
+        updateAudio();
+
+      }
+    );
+
+  }
+
+
+  if (music) {
+
+    music.addEventListener(
+      "input",
+      () => {
+
+        state.settings.music =
+          Number(music.value);
+
+        updateAudio();
+
+      }
+    );
+
+  }
+
+
+  if (sfx) {
+
+    sfx.addEventListener(
+      "input",
+      () => {
+
+        state.settings.sfx =
+          Number(sfx.value);
+
+      }
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   KEYBOARD CONTROLS
+   ========================================================= */
+
+const keys = {};
+
+
+window.addEventListener(
+  "keydown",
+  event => {
+
+    keys[event.key.toLowerCase()] =
+      true;
+
+
+    /*
+       Attack
+    */
+
+    if (
+      event.key ===
+      " "
+    ) {
+
+      event.preventDefault();
+
+      attack();
+
+    }
+
+
+    /*
+       Pause
+    */
+
+    if (
+      event.key ===
+      "Escape"
+    ) {
+
+      if (
+        gameRunning &&
+        !paused
+      ) {
+
+        pauseGame();
+
+      }
+
+    }
+
+  }
+);
+
+
+window.addEventListener(
+  "keyup",
+  event => {
+
+    keys[event.key.toLowerCase()] =
+      false;
+
+  }
+);
+
+
+/* =========================================================
+   KEYBOARD MOVEMENT
+   ========================================================= */
+
+function updateKeyboardMovement() {
+
+  if (
+    !gameRunning ||
+    paused
+  ) {
+
+    return;
+
+  }
+
+
+  let x = 0;
+
+  let y = 0;
+
+
+  if (
+    keys["w"] ||
+    keys["arrowup"]
+  ) {
+
+    y -= 1;
+
+  }
+
+
+  if (
+    keys["s"] ||
+    keys["arrowdown"]
+  ) {
+
+    y += 1;
+
+  }
+
+
+  if (
+    keys["a"] ||
+    keys["arrowleft"]
+  ) {
+
+    x -= 1;
+
+  }
+
+
+  if (
+    keys["d"] ||
+    keys["arrowright"]
+  ) {
+
+    x += 1;
+
+  }
+
+
+  const length =
+    Math.sqrt(
+      x * x +
+      y * y
+    );
+
+
+  if (length > 0) {
+
+    player.x +=
+      (x / length) *
+      player.speed;
+
+    player.y +=
+      (y / length) *
+      player.speed;
+
+  }
+
+}
+
+
+/* =========================================================
+   PATCH UPDATE GAME FOR KEYBOARD
+   ========================================================= */
+
+const originalUpdateGame =
+  updateGame;
+
+
+/*
+   Instead of replacing the complete
+   game system, keyboard movement is
+   called through this timer.
+*/
+
+setInterval(() => {
+
+  updateKeyboardMovement();
+
+}, 16);
+
+
+/* =========================================================
+   FULLSCREEN
+   ========================================================= */
+
+function toggleFullscreen() {
+
+  try {
+
+    if (
+      !document.fullscreenElement
+    ) {
+
+      document
+        .documentElement
+        .requestFullscreen()
+        .catch(
+          () => {}
+        );
+
+      state.settings.fullscreen =
+        true;
+
+    } else {
+
+      document
+        .exitFullscreen()
+        .catch(
+          () => {}
+        );
+
+      state.settings.fullscreen =
+        false;
+
+    }
+
+
+    saveGame();
+
+  } catch (error) {}
+
+}
+
+
+/* =========================================================
+   FULLSCREEN BUTTON
+   ========================================================= */
+
+function connectFullscreen() {
+
+  const button =
+    document.getElementById(
+      "fullscreenButton"
+    );
+
+
+  if (!button) return;
+
+
+  button.addEventListener(
+    "click",
+    () => {
+
+      playClick();
+
+      toggleFullscreen();
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   VIBRATION
+   ========================================================= */
+
+function vibrate(ms = 30) {
+
+  if (
+    !state.settings.vibration
+  ) {
+
+    return;
+
+  }
+
+
+  if (
+    navigator.vibrate
+  ) {
+
+    navigator.vibrate(ms);
+
+  }
+
+}
+
+
+/* =========================================================
+   ATTACK VIBRATION
+   ========================================================= */
+
+const originalAttack =
+  attack;
+
+
+function performAttack() {
+
+  originalAttack();
+
+  vibrate(25);
+
+}
+
+
+/* =========================================================
+   PREVENT MOBILE SCROLL DURING GAME
+   ========================================================= */
+
+document.addEventListener(
+  "touchmove",
+  event => {
+
+    const gameScreen =
+      document.getElementById(
+        "gameScreen"
+      );
+
+
+    if (
+      gameScreen &&
+      gameScreen.classList
+        .contains("active")
+    ) {
+
+      event.preventDefault();
+
+    }
+
+  },
+  {
+    passive: false
+  }
+);
+
+
+/* =========================================================
+   SAVE BEFORE LEAVING PAGE
+   ========================================================= */
+
+window.addEventListener(
+  "beforeunload",
+  () => {
+
+    saveGame();
+
+  }
+);
+
+
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
+
+window.addEventListener(
+  "load",
+  () => {
+
+    loadSettings();
+
+    connectButtons();
+
+    connectGradeButtons();
+
+    connectAudioSliders();
+
+    connectFullscreen();
+
+    initializeJoysticks();
+
+    initializeAttackButton();
+
+    updateCharacterList();
+
+    startIntro();
+
+  }
+);
+
+
+/* =========================================================
+   EXTRA GLOBAL FUNCTIONS
+   Para gumana ang onclick="" sa HTML
+   ========================================================= */
+
+window.newGame =
+  newGame;
+
+window.continueGame =
+  continueGame;
+
+window.selectGrade =
+  selectGrade;
+
+window.selectCharacter =
+  selectCharacter;
+
+window.confirmCharacter =
+  confirmCharacter;
+
+window.chooseSide =
+  chooseSide;
+
+window.pauseGame =
+  pauseGame;
+
+window.resumeGame =
+  resumeGame;
+
+window.openSettings =
+  openSettings;
+
+window.closeSettings =
+  closeSettings;
+
+window.saveSettings =
+  saveSettings;
+
+window.openShop =
+  openShop;
+
+window.backToMenu =
+  backToMenu;
+
+window.quitGame =
+  quitGame;
+
+window.attack =
+  attack;
+
+window.closeCinematic =
+  closeCinematic;
+
+window.toggleFullscreen =
+  toggleFullscreen;
+
+
+/* =========================================================
+   END
+   ========================================================= */
