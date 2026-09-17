@@ -1,1 +1,264 @@
+<!DOCTYPE html>
+<html lang="ceb">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NIHS Zombie Apocalypse</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
+<body>
+
+<!-- INTRO -->
+<section id="introScreen" class="screen">
+    <div id="introImage"></div>
+
+    <div id="introEffects"></div>
+
+    <button id="introSkip" class="smallButton">
+        LAKTWAT
+    </button>
+</section>
+
+
+<!-- MAIN MENU -->
+<section id="menuScreen" class="screen hidden">
+    <div class="menuBackground"></div>
+
+    <div class="menuContent">
+        <h1>NIHS</h1>
+        <h2>ZOMBIE APOCALYPSE</h2>
+
+        <button onclick="newGame()">SUGDI</button>
+        <button onclick="continueGame()">PADAYON</button>
+        <button onclick="openSettings()">MGA SETTING</button>
+        <button onclick="openShop()">TINDahan</button>
+    </div>
+</section>
+
+
+<!-- CHARACTER SELECTION -->
+<section id="characterScreen" class="screen hidden">
+
+    <div class="topBar">
+        <button onclick="backToMenu()">BALIK</button>
+        <h2>PAGPILI SA KARAKTER</h2>
+    </div>
+
+    <div class="gradeSelector">
+        <button onclick="selectGrade(7)">BAITANG 7</button>
+        <button onclick="selectGrade(8)">BAITANG 8</button>
+        <button onclick="selectGrade(9)">BAITANG 9</button>
+        <button onclick="selectGrade(10)">BAITANG 10</button>
+        <button onclick="selectGrade(11)">BAITANG 11</button>
+        <button onclick="selectGrade(12)">BAITANG 12</button>
+    </div>
+
+    <div id="characterList"></div>
+
+    <div id="characterPreview">
+        <div id="previewCharacter">?</div>
+        <h2 id="previewName">PILI OG KARAKTER</h2>
+        <p id="previewInfo">Pilia ang imong gamiton nga karakter.</p>
+
+        <button onclick="confirmCharacter()">PADAYON</button>
+    </div>
+
+</section>
+
+
+<!-- SIDE SELECTION -->
+<section id="sideScreen" class="screen hidden">
+
+    <div class="topBar">
+        <button onclick="showScreen('characterScreen')">BALIK</button>
+        <h2>PAGPILI SA PANIG</h2>
+    </div>
+
+    <div class="sideCards">
+
+        <div class="sideCard" onclick="chooseSide('human')">
+            <div class="sideIcon">🧑</div>
+            <h2>TAO</h2>
+            <p>KAHIMSOG: 100</p>
+            <p>Gamit og lain-laing armas.</p>
+        </div>
+
+        <div class="sideCard" onclick="chooseSide('zombie')">
+            <div class="sideIcon">🧟</div>
+            <h2>ZOMBIE</h2>
+            <p>KAHIMSOG: 200</p>
+            <p>Ang imong armas kay KAGAT.</p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- GAME -->
+<section id="gameScreen" class="screen hidden">
+
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- GAME HUD -->
+    <div id="gameHUD">
+
+        <div class="hudTop">
+
+            <div>
+                <span id="playerName">PLAYER</span>
+                <div class="healthBar">
+                    <div id="healthFill"></div>
+                </div>
+                <span id="healthText">100 / 100</span>
+            </div>
+
+            <div class="levelInfo">
+                <div>ROOM <span id="roomNumber">1</span></div>
+                <div>LEVEL <span id="levelNumber">1</span></div>
+            </div>
+
+            <button onclick="pauseGame()">Ⅱ</button>
+
+        </div>
+
+        <div id="weaponHUD">
+            <span id="weaponName">CHALK</span>
+            <span id="weaponDamage">DAMAGE 5</span>
+        </div>
+
+    </div>
+
+
+    <!-- MOBILE CONTROLS -->
+
+    <div id="leftJoystick" class="joystick">
+        <div class="joystickBase">
+            <div class="joystickKnob"></div>
+        </div>
+    </div>
+
+    <div id="rightJoystick" class="joystick">
+        <div class="joystickBase">
+            <div class="joystickKnob"></div>
+        </div>
+    </div>
+
+    <button id="attackButton" onclick="attack()">ATTAKE</button>
+
+</section>
+
+
+<!-- PAUSE -->
+<section id="pauseScreen" class="overlay hidden">
+
+    <div class="pauseBox">
+        <h1>PAHUNONG</h1>
+
+        <button onclick="resumeGame()">PADAYON</button>
+        <button onclick="openSettings(true)">MGA SETTING</button>
+        <button onclick="quitGame()">GULA</button>
+    </div>
+
+</section>
+
+
+<!-- SETTINGS -->
+<section id="settingsScreen" class="screen hidden">
+
+    <div class="topBar">
+        <button onclick="closeSettings()">BALIK</button>
+        <h2>MGA SETTING</h2>
+    </div>
+
+    <div class="settingsBox">
+
+        <label>
+            MASTER VOLUME
+            <input id="masterVolume"
+                   type="range"
+                   min="0"
+                   max="1"
+                   step="0.01">
+        </label>
+
+        <label>
+            MUSIC VOLUME
+            <input id="musicVolume"
+                   type="range"
+                   min="0"
+                   max="1"
+                   step="0.01">
+        </label>
+
+        <label>
+            SFX VOLUME
+            <input id="sfxVolume"
+                   type="range"
+                   min="0"
+                   max="1"
+                   step="0.01">
+        </label>
+
+        <label>
+            VIBRATION
+            <input id="vibrationToggle" type="checkbox">
+        </label>
+
+        <label>
+            FULLSCREEN
+            <input id="fullscreenToggle" type="checkbox">
+        </label>
+
+        <button onclick="saveSettings()">I-SAVE ANG SETTING</button>
+
+    </div>
+
+</section>
+
+
+<!-- SHOP -->
+<section id="shopScreen" class="screen hidden">
+
+    <div class="topBar">
+        <button onclick="backToMenu()">BALIK</button>
+        <h2>TINDahan</h2>
+    </div>
+
+    <div class="coins">
+        KWARTA: <span id="coinsText">0</span>
+    </div>
+
+    <div id="shopItems"></div>
+
+</section>
+
+
+<!-- CINEMATIC -->
+<section id="cinematicScreen" class="overlay hidden">
+
+    <video id="cinematicVideo" playsinline></video>
+
+    <button id="cinematicSkip" class="smallButton">
+        LAKTWAT
+    </button>
+
+</section>
+
+
+<!-- AUDIO -->
+<audio id="gameMusic"
+       src="assets/music/gameplay.mp3"
+       loop></audio>
+
+<audio id="yawaSound"
+       src="assets/sfx/yawa.mp3"></audio>
+
+<audio id="clickSound"
+       src="assets/sfx/click.mp3"></audio>
+
+<script src="script.js"></script>
+
+</body>
+</html>
